@@ -4,13 +4,12 @@ import { useState } from "react";
 
 export default function Home() {
   const [name, setName] = useState("");
-  const [data, setData] = useState<{
-    message: string;
-    apiKeyUsed: string;
-  } | null>(null);
+  const [data, setData] = useState<number | null>(null);
 
   const fetchGreeting = async () => {
-    const res = await fetch(`/api/hello?name=${encodeURIComponent(name)}`);
+    const res = await fetch(
+      `/api/numTracks?username=${encodeURIComponent(name)}`
+    );
     const result = await res.json();
     setData(result);
   };
@@ -23,7 +22,7 @@ export default function Home() {
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        placeholder="Enter your name"
+        placeholder="Enter your username"
         className="border p-2 rounded"
       />
 
@@ -34,14 +33,7 @@ export default function Home() {
         Get Greeting
       </button>
 
-      {data && (
-        <>
-          <p className="text-lg">{data.message}</p>
-          <p className="text-sm text-gray-500">
-            API Key Status: {data.apiKeyUsed}
-          </p>
-        </>
-      )}
+      {data && <p className="text-lg">{data}</p>}
     </div>
   );
 }
