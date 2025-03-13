@@ -16,7 +16,7 @@ type GetTopArtistsParams = {
   method: "user.getTopArtists";
 } & GetTopParams;
 
-type RequestParams =
+export type RequestParams =
   | GetTopTracksParams
   | GetTopAlbumsParams
   | GetTopArtistsParams;

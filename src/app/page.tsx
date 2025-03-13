@@ -7,9 +7,7 @@ export default function Home() {
   const [data, setData] = useState<number | null>(null);
 
   const fetchGreeting = async () => {
-    const res = await fetch(
-      `/api/numTracks?username=${encodeURIComponent(name)}`
-    );
+    const res = await fetch(`/api/numTracks?user=${encodeURIComponent(name)}`);
     const result = await res.json();
     setData(result);
   };
@@ -22,7 +20,7 @@ export default function Home() {
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        placeholder="Enter your username"
+        placeholder="Enter your user"
         className="border p-2 rounded"
       />
 
