@@ -1,7 +1,5 @@
 import { fetchLastFmData } from "./fetchLastFmData";
-import { TopAlbumsData } from "./numAlbums/isTopAlbumsData";
-import { TopArtistsData } from "./numArtists/isTopArtistsData";
-import { TopTracksData } from "./numTracks/isTopTracksData";
+import { TopAlbumsData, TopArtistsData, TopTracksData } from "./guards";
 import {
   isValidationError,
   validateEnv,

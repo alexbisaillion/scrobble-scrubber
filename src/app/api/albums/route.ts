@@ -1,15 +1,15 @@
+import { isTopAlbumsData } from "../guards";
 import { getTopEntitiesByPage } from "../getTopEntitiesByPage";
-import { isTopTracksData } from "../guards";
 
 export async function GET(req: Request) {
   return getTopEntitiesByPage({
     req,
-    method: "user.getTopTracks",
-    typeGuard: isTopTracksData,
+    method: "user.getTopAlbums",
+    typeGuard: isTopAlbumsData,
     extractor: (data) =>
-      data.toptracks.track.map(({ artist, name }) => ({
+      data.topalbums.album.map(({ artist, name }) => ({
         artist: artist.name,
-        name: name,
+        name,
       })),
     limit: 50,
   });

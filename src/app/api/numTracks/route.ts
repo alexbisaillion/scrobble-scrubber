@@ -1,4 +1,4 @@
-import { isTopTracksData } from "./isTopTracksData";
+import { isTopTracksData } from "../guards";
 import { getTopEntities } from "../getTopEntities";
 
 export async function GET(req: Request) {

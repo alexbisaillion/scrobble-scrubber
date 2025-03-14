@@ -1,4 +1,4 @@
-import { isTopArtistsData } from "./isTopArtistsData";
+import { isTopArtistsData } from "../guards";
 import { getTopEntities } from "../getTopEntities";
 
 export async function GET(req: Request) {

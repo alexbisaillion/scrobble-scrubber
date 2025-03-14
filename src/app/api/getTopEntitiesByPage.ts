@@ -1,7 +1,5 @@
 import { getTopEntities, GetTopEntitiesParams } from "./getTopEntities";
-import { TopAlbumsData } from "./numAlbums/isTopAlbumsData";
-import { TopArtistsData } from "./numArtists/isTopArtistsData";
-import { TopTracksData } from "./numTracks/isTopTracksData";
+import { TopAlbumsData, TopArtistsData, TopTracksData } from "./guards";
 import { isValidationError, validateSearchParams } from "./validators";
 
 export const getTopEntitiesByPage = async <
