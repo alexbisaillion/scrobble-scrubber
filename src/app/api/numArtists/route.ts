@@ -7,5 +7,6 @@ export async function GET(req: Request) {
     method: "user.getTopArtists",
     typeGuard: isTopArtistsData,
     extractor: (data) => parseInt(data["topartists"]["@attr"]["total"]),
+    limit: 1,
   });
 }

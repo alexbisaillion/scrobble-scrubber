@@ -7,5 +7,6 @@ export async function GET(req: Request) {
     method: "user.getTopTracks",
     typeGuard: isTopTracksData,
     extractor: (data) => parseInt(data["toptracks"]["@attr"]["total"]),
+    limit: 1,
   });
 }

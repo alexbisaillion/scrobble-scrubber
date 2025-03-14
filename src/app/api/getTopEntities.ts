@@ -1,5 +1,4 @@
 import { fetchLastFmData } from "./fetchLastFmData";
-import { RequestParams } from "./getRequestOptions";
 import { TopAlbumsData } from "./numAlbums/isTopAlbumsData";
 import { TopArtistsData } from "./numArtists/isTopArtistsData";
 import { TopTracksData } from "./numTracks/isTopTracksData";
@@ -9,11 +8,13 @@ import {
   validateSearchParams,
 } from "./validators";
 
-type GetTopEntitiesParams<T, U> = {
+export type GetTopEntitiesParams<T, U> = {
   req: Request;
   method: "user.getTopTracks" | "user.getTopAlbums" | "user.getTopArtists";
   typeGuard: (data: unknown) => data is T;
   extractor: (data: T) => U;
+  limit: number;
+  page?: number;
 };
 export const getTopEntities = async <
   T extends TopTracksData | TopAlbumsData | TopArtistsData,
@@ -21,7 +22,7 @@ export const getTopEntities = async <
 >(
   params: GetTopEntitiesParams<T, V>
 ) => {
-  const { req, method, typeGuard, extractor } = params;
+  const { req, method, typeGuard, extractor, limit, page } = params;
   const envCheck = validateEnv();
   if (isValidationError(envCheck)) {
     return Response.json(envCheck);
@@ -34,7 +35,13 @@ export const getTopEntities = async <
 
   const { LAST_FM_API_KEY } = envCheck;
   const { user } = searchParams;
-  const requestParams: RequestParams = { method, user, limit: 1 };
+
+  const requestParams = {
+    method,
+    user,
+    limit,
+    ...(page !== undefined ? { page } : undefined),
+  };
 
   const data = await fetchLastFmData<T>(
     requestParams,
