@@ -1,16 +1,12 @@
 import { fetchLastFmData } from "./fetchLastFmData";
 import { TopAlbumsData, TopArtistsData, TopTracksData } from "./guards";
-import {
-  isValidationError,
-  validateEnv,
-  validateSearchParams,
-} from "./validators";
+import { isValidationError, validateEnv } from "./validators";
 
 export type GetTopEntitiesParams<T, U> = {
-  req: Request;
   method: "user.getTopTracks" | "user.getTopAlbums" | "user.getTopArtists";
   typeGuard: (data: unknown) => data is T;
   extractor: (data: T) => U;
+  user: string;
   limit: number;
   page?: number;
 };
@@ -20,19 +16,13 @@ export const getTopEntities = async <
 >(
   params: GetTopEntitiesParams<T, V>
 ) => {
-  const { req, method, typeGuard, extractor, limit, page } = params;
+  const { method, typeGuard, extractor, user, limit, page } = params;
   const envCheck = validateEnv();
   if (isValidationError(envCheck)) {
-    return Response.json(envCheck);
-  }
-
-  const searchParams = validateSearchParams<{ user: string }>(req, ["user"]);
-  if (isValidationError(searchParams)) {
-    return Response.json(searchParams);
+    return envCheck;
   }
 
   const { LAST_FM_API_KEY } = envCheck;
-  const { user } = searchParams;
 
   const requestParams = {
     method,
@@ -47,8 +37,8 @@ export const getTopEntities = async <
     typeGuard
   );
   if (isValidationError(data)) {
-    return Response.json(data);
+    return data;
   }
 
-  return Response.json(extractor(data));
+  return extractor(data);
 };
