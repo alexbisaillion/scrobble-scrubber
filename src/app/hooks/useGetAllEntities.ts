@@ -6,10 +6,10 @@ import { ValidationError } from "../api/validators/types";
 type UseGetDuplicatesProps<T> = {
   user: string;
   getNumEntities: (user: string) => Promise<number | ValidationError>;
-  getEntities: (user: string, page: number) => Promise<T | ValidationError>;
+  getEntities: (user: string, page: number) => Promise<T[] | ValidationError>;
 };
 
-export const useGetDuplicates = <T>({
+export const useGetAllEntities = <T>({
   user,
   getNumEntities,
   getEntities,
@@ -17,13 +17,17 @@ export const useGetDuplicates = <T>({
   const [numEntities, setNumEntities] = useState(-1);
   const [page, setPage] = useState(-1);
   const [numPages, setNumPages] = useState(-1);
+  const [error, setError] = useState<string>();
 
   const entitiesRef = useRef<T[]>([]);
 
   useEffect(() => {
     const fetchNumEntities = async () => {
       const numEntities = await getNumEntities(user);
-      if (typeof numEntities !== "number") return;
+      if (typeof numEntities !== "number") {
+        setError(numEntities.error);
+        return;
+      }
 
       setNumEntities(numEntities);
       setNumPages(Math.ceil(numEntities / 1000));
@@ -41,7 +45,10 @@ export const useGetDuplicates = <T>({
 
     const fetchEntities = async () => {
       const fetchedEntities = await getEntities(user, page);
-      if (!Array.isArray(fetchedEntities)) return;
+      if (!Array.isArray(fetchedEntities)) {
+        setError(fetchedEntities.error);
+        return;
+      }
 
       const startIndex = (page - 1) * 1000;
       fetchedEntities.forEach((track, i) => {
@@ -54,5 +61,10 @@ export const useGetDuplicates = <T>({
     fetchEntities();
   }, [user, page, numPages, getEntities]);
 
-  return { numEntities, entities: entitiesRef.current };
+  return {
+    numEntities,
+    entities: entitiesRef.current,
+    loadedPercentage: page / numPages,
+    error,
+  };
 };

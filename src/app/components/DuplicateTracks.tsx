@@ -7,11 +7,11 @@ type DuplicateTracksProps = {
 };
 
 export const DuplicateTracks = ({ user }: DuplicateTracksProps) => {
-  const { entities, numEntities } = useGetDuplicateTracks(user);
+  const { entities, loadedPercentage } = useGetDuplicateTracks(user);
 
   return (
     <>
-      <span>Total: {numEntities}</span>
+      <span>Loaded: {loadedPercentage}</span>
       <span>Count: {entities.filter((track) => track !== null).length}</span>
     </>
   );

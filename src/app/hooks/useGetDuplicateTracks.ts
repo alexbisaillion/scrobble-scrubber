@@ -1,11 +1,20 @@
 "use client";
 
+import { useEffect } from "react";
 import { getNumTracks, getTracks } from "../api";
-import { useGetDuplicates } from "./useGetDuplicates";
+import { useGetAllEntities } from "./useGetAllEntities";
 
-export const useGetDuplicateTracks = (user: string) =>
-  useGetDuplicates({
+export const useGetDuplicateTracks = (user: string) => {
+  const { entities, loadedPercentage } = useGetAllEntities({
     user,
     getNumEntities: getNumTracks,
     getEntities: getTracks,
   });
+
+  useEffect(() => {
+    if (loadedPercentage >= 1) {
+      console.log(entities);
+    }
+  }, [loadedPercentage, entities]);
+  return { entities, loadedPercentage };
+};
