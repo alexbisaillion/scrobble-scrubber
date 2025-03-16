@@ -2,12 +2,11 @@
 
 import { useState } from "react";
 import { DuplicatesContent, TopEntityForm } from "./components";
+import { EntityType } from "./types";
 
 export default function Home() {
   const [user, setUser] = useState<string>("");
-  const [entityType, setEntityType] = useState<"tracks" | "albums" | "artists">(
-    "tracks"
-  );
+  const [entityType, setEntityType] = useState<EntityType>("tracks");
   const [hasSubmittedForm, setHasSubmittedForm] = useState(false);
 
   const content = hasSubmittedForm ? (

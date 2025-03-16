@@ -6,11 +6,12 @@ import {
   getNumTracks,
   getTracks,
 } from "../api";
+import { EntityType } from "../types";
 import { DuplicatesLifecycle } from "./DuplicatesLifecycle";
 
 type DuplicatesContentProps = {
   user: string;
-  entityType: "tracks" | "albums" | "artists";
+  entityType: EntityType;
   reset: () => void;
 };
 

@@ -1,9 +1,13 @@
 "use server";
 
+import { Album, Artist, Track } from "../types";
 import { getTopEntities } from "./getTopEntities";
 import { isTopAlbumsData, isTopArtistsData, isTopTracksData } from "./guards";
+import { ValidationError } from "./validators";
 
-export const getNumTracks = async (user: string) => {
+export const getNumTracks = async (
+  user: string
+): Promise<ValidationError | number> => {
   return getTopEntities({
     method: "user.getTopTracks",
     typeGuard: isTopTracksData,
@@ -13,7 +17,9 @@ export const getNumTracks = async (user: string) => {
   });
 };
 
-export const getNumAlbums = async (user: string) => {
+export const getNumAlbums = async (
+  user: string
+): Promise<ValidationError | number> => {
   return getTopEntities({
     method: "user.getTopAlbums",
     typeGuard: isTopAlbumsData,
@@ -23,7 +29,9 @@ export const getNumAlbums = async (user: string) => {
   });
 };
 
-export const getNumArtists = async (user: string) => {
+export const getNumArtists = async (
+  user: string
+): Promise<ValidationError | number> => {
   return getTopEntities({
     method: "user.getTopArtists",
     typeGuard: isTopArtistsData,
@@ -33,7 +41,10 @@ export const getNumArtists = async (user: string) => {
   });
 };
 
-export const getTracks = async (user: string, page: number) => {
+export const getTracks = async (
+  user: string,
+  page: number
+): Promise<ValidationError | Track[]> => {
   return getTopEntities({
     method: "user.getTopTracks",
     typeGuard: isTopTracksData,
@@ -48,7 +59,10 @@ export const getTracks = async (user: string, page: number) => {
   });
 };
 
-export const getAlbums = async (user: string, page: number) => {
+export const getAlbums = async (
+  user: string,
+  page: number
+): Promise<ValidationError | Album[]> => {
   return getTopEntities({
     method: "user.getTopAlbums",
     typeGuard: isTopAlbumsData,
@@ -63,7 +77,10 @@ export const getAlbums = async (user: string, page: number) => {
   });
 };
 
-export const getArtists = async (user: string, page: number) => {
+export const getArtists = async (
+  user: string,
+  page: number
+): Promise<ValidationError | Artist[]> => {
   return getTopEntities({
     method: "user.getTopArtists",
     typeGuard: isTopArtistsData,

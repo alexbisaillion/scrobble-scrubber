@@ -1,8 +1,10 @@
+import { EntityType } from "../types";
+
 type TopEntityFormProps = {
   user: string;
   setUser: (username: string) => void;
-  entityType: "tracks" | "albums" | "artists";
-  setEntityType: (entityType: "tracks" | "albums" | "artists") => void;
+  entityType: EntityType;
+  setEntityType: (entityType: EntityType) => void;
   setHasSubmittedForm: () => void;
 };
 
@@ -33,9 +35,7 @@ export const TopEntityForm = ({
         <select
           id="entityType"
           value={entityType}
-          onChange={(e) =>
-            setEntityType(e.target.value as "tracks" | "albums" | "artists")
-          }
+          onChange={(e) => setEntityType(e.target.value as EntityType)}
           className="mt-2 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
         >
           <option value="tracks">Tracks</option>

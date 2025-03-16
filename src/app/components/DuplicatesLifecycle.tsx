@@ -1,8 +1,9 @@
 import { useGetAllEntities, UseGetDuplicatesProps } from "../hooks";
+import { EntityType } from "../types";
 import { DuplicatesLoadingBar } from "./DuplicatesLoadingBar";
 
 type DuplicatesLifecycleProps<T> = {
-  entityType: "tracks" | "albums" | "artists";
+  entityType: EntityType;
   reset: () => void;
 } & UseGetDuplicatesProps<T>;
 

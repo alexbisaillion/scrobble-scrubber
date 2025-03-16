@@ -1,7 +1,8 @@
+import { EntityType } from "../types";
 import { LoadingBar } from "./LoadingBar";
 
 type DuplicatesLoadingBar = {
-  entityType: "tracks" | "albums" | "artists";
+  entityType: EntityType;
   percentage: number;
   numEntitiesLoaded: number;
   numEntities: number;

@@ -1,6 +1,6 @@
 import { fetchLastFmData } from "./fetchLastFmData";
 import { TopAlbumsData, TopArtistsData, TopTracksData } from "./guards";
-import { isValidationError, validateEnv } from "./validators";
+import { isValidationError, validateEnv, ValidationError } from "./validators";
 
 export type GetTopEntitiesParams<T, U> = {
   method: "user.getTopTracks" | "user.getTopAlbums" | "user.getTopArtists";
@@ -12,10 +12,10 @@ export type GetTopEntitiesParams<T, U> = {
 };
 export const getTopEntities = async <
   T extends TopTracksData | TopAlbumsData | TopArtistsData,
-  V
+  U
 >(
-  params: GetTopEntitiesParams<T, V>
-) => {
+  params: GetTopEntitiesParams<T, U>
+): Promise<U | ValidationError> => {
   const { method, typeGuard, extractor, user, limit, page } = params;
   const envCheck = validateEnv();
   if (isValidationError(envCheck)) {
