@@ -1,37 +1,32 @@
-"use client";
-
-import { useState } from "react";
-
 type TopEntityFormProps = {
-  processForm: (
-    username: string,
-    entityType: "tracks" | "albums" | "artists"
-  ) => void;
+  user: string;
+  setUser: (username: string) => void;
+  entityType: "tracks" | "albums" | "artists";
+  setEntityType: (entityType: "tracks" | "albums" | "artists") => void;
+  setHasSubmittedForm: () => void;
 };
 
-export const TopEntityForm = ({ processForm }: TopEntityFormProps) => {
-  const [username, setUsername] = useState<string>("");
-  const [entityType, setEntityType] = useState<"tracks" | "albums" | "artists">(
-    "tracks"
-  );
-
+export const TopEntityForm = ({
+  user,
+  setUser,
+  entityType,
+  setEntityType,
+  setHasSubmittedForm,
+}: TopEntityFormProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    processForm(username, entityType);
+    setHasSubmittedForm();
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+    <form onSubmit={handleSubmit}>
       <div className="flex flex-col gap-4 p-4">
-        <h2 className="text-2xl font-semibold text-center text-gray-900 dark:text-white">
-          Split Scrobble Finder V2
-        </h2>
         <input
           placeholder="Username"
           type="text"
           id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={user}
+          onChange={(e) => setUser(e.target.value)}
           required
           className="mt-2 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
         />

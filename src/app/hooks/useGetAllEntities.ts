@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { ValidationError } from "../api/validators/types";
 
-type UseGetDuplicatesProps<T> = {
+export type UseGetDuplicatesProps<T> = {
   user: string;
   getNumEntities: (user: string) => Promise<number | ValidationError>;
   getEntities: (user: string, page: number) => Promise<T[] | ValidationError>;
@@ -64,7 +64,7 @@ export const useGetAllEntities = <T>({
   return {
     numEntities,
     entities: entitiesRef.current,
-    loadedPercentage: ((page - 1) / numPages) * 100,
+    loadedPercentage: page > 0 ? (page - 1) / numPages : 0,
     error,
   };
 };
