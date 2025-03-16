@@ -1,3 +1,4 @@
+import { JSX } from "react";
 import {
   getAlbums,
   getArtists,
@@ -5,36 +6,66 @@ import {
   getNumArtists,
   getNumTracks,
   getTracks,
+  ValidationError,
 } from "../api";
-import { EntityType } from "../types";
+import { Album, Artist, EntityType, Track } from "../types";
 import { DuplicatesLifecycle } from "./DuplicatesLifecycle";
 
-type DuplicatesContentProps = {
+type EntityTypeMap = {
+  tracks: Track;
+  albums: Album;
+  artists: Artist;
+};
+
+type DuplicatesContentProps<T extends EntityType> = {
   user: string;
-  entityType: EntityType;
+  entityType: T;
   reset: () => void;
 };
 
-const entityMethods = {
-  tracks: { getNumEntities: getNumTracks, getEntities: getTracks },
-  albums: { getNumEntities: getNumAlbums, getEntities: getAlbums },
-  artists: { getNumEntities: getNumArtists, getEntities: getArtists },
+const entityMethods: {
+  [K in EntityType]: {
+    getNumEntities: (user: string) => Promise<number | ValidationError>;
+    getEntities: (
+      user: string,
+      page: number
+    ) => Promise<EntityTypeMap[K][] | ValidationError>;
+    renderDuplicates: (entities: EntityTypeMap[K][]) => JSX.Element;
+  };
+} = {
+  tracks: {
+    getNumEntities: getNumTracks,
+    getEntities: getTracks,
+    renderDuplicates: (tracks) => <span>{tracks.length}</span>,
+  },
+  albums: {
+    getNumEntities: getNumAlbums,
+    getEntities: getAlbums,
+    renderDuplicates: (albums) => <span>{albums.length}</span>,
+  },
+  artists: {
+    getNumEntities: getNumArtists,
+    getEntities: getArtists,
+    renderDuplicates: (artists) => <span>{artists.length}</span>,
+  },
 };
 
-export const DuplicatesContent = ({
+export const DuplicatesContent = <T extends EntityType>({
   user,
   entityType,
   reset,
-}: DuplicatesContentProps) => {
-  const { getNumEntities, getEntities } = entityMethods[entityType];
+}: DuplicatesContentProps<T>) => {
+  const { getNumEntities, getEntities, renderDuplicates } =
+    entityMethods[entityType];
 
   return (
-    <DuplicatesLifecycle
+    <DuplicatesLifecycle<EntityTypeMap[T]>
       entityType={entityType}
       user={user}
       reset={reset}
       getNumEntities={getNumEntities}
       getEntities={getEntities}
+      renderDuplicates={renderDuplicates}
     />
   );
 };
