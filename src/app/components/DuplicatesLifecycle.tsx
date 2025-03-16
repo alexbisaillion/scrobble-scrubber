@@ -21,16 +21,24 @@ export const DuplicatesLifecycle = <T,>({
 
   const hasLoaded = loadedPercentage >= 1 && !error;
 
-  const content = hasLoaded ? (
-    <p>loaded</p>
-  ) : (
-    <DuplicatesLoadingBar
-      entityType={entityType}
-      percentage={loadedPercentage}
-      numEntities={entities.length}
-      numEntitiesLoaded={entities.filter((track) => track !== null).length}
-    />
-  );
+  const renderContent = () => {
+    if (error) {
+      return <span>An error occurred - {error} Please try again.</span>;
+    }
+
+    if (hasLoaded) {
+      return <span>loaded</span>;
+    }
+
+    return (
+      <DuplicatesLoadingBar
+        entityType={entityType}
+        percentage={loadedPercentage}
+        numEntities={entities.length}
+        numEntitiesLoaded={entities.filter((entity) => entity !== null).length}
+      />
+    );
+  };
 
   return (
     <>
@@ -40,7 +48,7 @@ export const DuplicatesLifecycle = <T,>({
       >
         Reset
       </button>
-      {content}
+      {renderContent()}
     </>
   );
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DuplicateTable, TopEntityForm } from "./components";
+import { DuplicatesContent, TopEntityForm } from "./components";
 
 export default function Home() {
   const [user, setUser] = useState<string>("");
@@ -11,7 +11,7 @@ export default function Home() {
   const [hasSubmittedForm, setHasSubmittedForm] = useState(false);
 
   const content = hasSubmittedForm ? (
-    <DuplicateTable
+    <DuplicatesContent
       user={user}
       entityType={entityType}
       reset={() => setHasSubmittedForm(false)}

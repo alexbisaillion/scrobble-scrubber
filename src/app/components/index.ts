@@ -1,2 +1,2 @@
 export { TopEntityForm } from "./TopEntityForm";
-export { DuplicateTable } from "./DuplicateTable";
+export { DuplicatesContent } from "./DuplicatesContent";
