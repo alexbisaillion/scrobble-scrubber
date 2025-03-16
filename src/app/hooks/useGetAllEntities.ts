@@ -64,7 +64,7 @@ export const useGetAllEntities = <T>({
   return {
     numEntities,
     entities: entitiesRef.current,
-    loadedPercentage: page / numPages,
+    loadedPercentage: ((page - 1) / numPages) * 100,
     error,
   };
 };
