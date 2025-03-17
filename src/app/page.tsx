@@ -26,11 +26,13 @@ export default function Home() {
   );
 
   return (
-    <div className="flex flex-col p-4 items-center gap-4">
-      <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
-        Split Scrobble Finder V2
-      </h2>
-      {content}
+    <div className="flex flex-col items-center w-full">
+      <div className="flex flex-col p-4 items-center gap-4 max-w-5xl">
+        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
+          Split Scrobble Finder V2
+        </h2>
+        {content}
+      </div>
     </div>
   );
 }

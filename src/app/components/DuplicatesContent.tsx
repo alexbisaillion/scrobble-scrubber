@@ -10,6 +10,8 @@ import {
 } from "../api";
 import { Album, Artist, EntityType, Track } from "../types";
 import { DuplicatesLifecycle } from "./DuplicatesLifecycle";
+import { PartitionedDuplicatesTable } from "./PartitionedDuplicatesTable";
+import { isDuplicateTrack } from "../logic";
 
 type EntityTypeMap = {
   tracks: Track;
@@ -36,7 +38,12 @@ const entityMethods: {
   tracks: {
     getNumEntities: getNumTracks,
     getEntities: getTracks,
-    renderDuplicates: (tracks) => <span>{tracks.length}</span>,
+    renderDuplicates: (tracks) => (
+      <PartitionedDuplicatesTable
+        entities={tracks}
+        isDuplicateEntity={isDuplicateTrack}
+      />
+    ),
   },
   albums: {
     getNumEntities: getNumAlbums,
