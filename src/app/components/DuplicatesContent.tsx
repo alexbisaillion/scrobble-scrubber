@@ -12,6 +12,7 @@ import { Album, Artist, EntityType, Track } from "../types";
 import { DuplicatesLifecycle } from "./DuplicatesLifecycle";
 import { PartitionedDuplicatesTable } from "./PartitionedDuplicatesTable";
 import { isDuplicateTrack } from "../logic";
+import { getTrackLink } from "../utils";
 
 type EntityTypeMap = {
   tracks: Track;
@@ -32,16 +33,21 @@ const entityMethods: {
       user: string,
       page: number
     ) => Promise<EntityTypeMap[K][] | ValidationError>;
-    renderDuplicates: (entities: EntityTypeMap[K][]) => JSX.Element;
+    renderDuplicates: (
+      entities: EntityTypeMap[K][],
+      user: string
+    ) => JSX.Element;
   };
 } = {
   tracks: {
     getNumEntities: getNumTracks,
     getEntities: getTracks,
-    renderDuplicates: (tracks) => (
+    renderDuplicates: (tracks, user) => (
       <PartitionedDuplicatesTable
+        user={user}
         entities={tracks}
         isDuplicateEntity={isDuplicateTrack}
+        getEntityLink={getTrackLink}
       />
     ),
   },

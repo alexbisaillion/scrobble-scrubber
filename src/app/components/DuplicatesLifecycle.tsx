@@ -6,7 +6,7 @@ import { DuplicatesLoadingBar } from "./DuplicatesLoadingBar";
 type DuplicatesLifecycleProps<T> = {
   entityType: EntityType;
   reset: () => void;
-  renderDuplicates: (entities: T[]) => JSX.Element;
+  renderDuplicates: (entities: T[], user: string) => JSX.Element;
 } & UseGetDuplicatesProps<T>;
 
 export const DuplicatesLifecycle = <T,>({
@@ -31,7 +31,7 @@ export const DuplicatesLifecycle = <T,>({
     }
 
     if (hasLoaded) {
-      return renderDuplicates(entities);
+      return renderDuplicates(entities, user);
     }
 
     return (

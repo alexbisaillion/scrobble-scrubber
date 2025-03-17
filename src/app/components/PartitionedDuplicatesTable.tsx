@@ -2,17 +2,21 @@ import { getPartitionedDuplicates } from "../logic";
 import { Album, Track } from "../types";
 
 type PartitionedDuplicatesTableProps = {
-  entities: Album[] | Track[];
+  user: string;
+  entities: Album[] | Track[]; // TODO make this type generic
   isDuplicateEntity: (
     entityA: string,
     entityB: string,
     useRules: boolean
   ) => boolean;
+  getEntityLink: (entity: Album | Track, user: string) => string;
 };
 
 export const PartitionedDuplicatesTable = ({
+  user,
   entities,
   isDuplicateEntity,
+  getEntityLink,
 }: PartitionedDuplicatesTableProps) => {
   const duplicates = getPartitionedDuplicates({
     entities,
@@ -45,10 +49,30 @@ export const PartitionedDuplicatesTable = ({
                   className={index % 2 === 0 ? "bg-gray-800" : "bg-gray-700"}
                 >
                   <td className="px-4 py-2 w-1/2 border-t border-gray-600">
-                    {entity1}
+                    <a
+                      className="hover:opacity-75"
+                      href={getEntityLink(
+                        { artist: artist, name: entity1 },
+                        user
+                      )}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {entity1}
+                    </a>
                   </td>
                   <td className="px-4 py-2 w-1/2 border-t border-gray-600">
-                    {entity2}
+                    <a
+                      className="hover:opacity-75"
+                      href={getEntityLink(
+                        { artist: artist, name: entity2 },
+                        user
+                      )}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {entity2}
+                    </a>
                   </td>
                 </tr>
               ))}
