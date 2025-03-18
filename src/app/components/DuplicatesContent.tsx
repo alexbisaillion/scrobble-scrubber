@@ -11,8 +11,13 @@ import {
 import { Album, Artist, EntityType, Track } from "../types";
 import { DuplicatesLifecycle } from "./DuplicatesLifecycle";
 import { PartitionedDuplicatesTable } from "./PartitionedDuplicatesTable";
-import { isDuplicateTrack } from "../logic";
-import { getTrackLink } from "../utils";
+import {
+  isDuplicateAlbum,
+  isDuplicateArtist,
+  isDuplicateTrack,
+} from "../logic";
+import { getAlbumLink, getArtistLink, getTrackLink } from "../utils";
+import { DuplicatesTable } from "./DuplicatesTable";
 
 type EntityTypeMap = {
   tracks: Track;
@@ -54,12 +59,26 @@ const entityMethods: {
   albums: {
     getNumEntities: getNumAlbums,
     getEntities: getAlbums,
-    renderDuplicates: (albums) => <span>{albums.length}</span>,
+    renderDuplicates: (albums, user) => (
+      <PartitionedDuplicatesTable
+        user={user}
+        entities={albums}
+        isDuplicateEntity={isDuplicateAlbum}
+        getEntityLink={getAlbumLink}
+      />
+    ),
   },
   artists: {
     getNumEntities: getNumArtists,
     getEntities: getArtists,
-    renderDuplicates: (artists) => <span>{artists.length}</span>,
+    renderDuplicates: (artists, user) => (
+      <DuplicatesTable
+        user={user}
+        entities={artists.map(({ name }) => name)}
+        isDuplicateEntity={isDuplicateArtist}
+        getEntityLink={getArtistLink}
+      />
+    ),
   },
 };
 
