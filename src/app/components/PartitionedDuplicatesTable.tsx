@@ -1,5 +1,6 @@
 import { getPartitionedDuplicates } from "../logic";
 import { Album, Track } from "../types";
+import { SummaryCard } from "./SummaryCard";
 
 type PartitionedDuplicatesTableProps = {
   user: string;
@@ -26,6 +27,7 @@ export const PartitionedDuplicatesTable = ({
 
   return (
     <>
+      <SummaryCard duplicates={duplicates} />
       {[...duplicates.entries()].map(([artist, matches]) => (
         <div
           key={artist}
