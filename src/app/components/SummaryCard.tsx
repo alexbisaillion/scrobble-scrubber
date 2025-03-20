@@ -95,13 +95,13 @@ export const SummaryCard = ({ duplicates }: SummaryCardProps) => {
       <div className="flex space-x-4">
         <button
           onClick={handleDownloadCSV}
-          className="px-4 py-2 bg-green-600 text-white rounded-md"
+          className="px-4 py-2 bg-green-600 text-white rounded-md cursor-pointer"
         >
           Download as CSV
         </button>
         <button
           onClick={handleDownloadJSON}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md"
+          className="px-4 py-2 bg-blue-600 text-white rounded-md cursor-pointer"
         >
           Download as JSON
         </button>
