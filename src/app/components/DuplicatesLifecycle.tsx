@@ -1,5 +1,5 @@
 import { JSX } from "react";
-import { useGetAllEntities, UseGetDuplicatesProps } from "../hooks";
+import { useGetAllEntities, UseGetAllEntitiesProps } from "../hooks";
 import { EntityType } from "../types";
 import { DuplicatesLoadingBar } from "./DuplicatesLoadingBar";
 
@@ -7,7 +7,7 @@ type DuplicatesLifecycleProps<T> = {
   entityType: EntityType;
   reset: () => void;
   renderDuplicates: (entities: T[], user: string) => JSX.Element;
-} & UseGetDuplicatesProps<T>;
+} & UseGetAllEntitiesProps<T>;
 
 export const DuplicatesLifecycle = <T,>({
   entityType,

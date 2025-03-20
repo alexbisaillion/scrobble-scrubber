@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { getPartitionedDuplicates } from "../logic";
 import { Album, Track } from "../types";
 import { SummaryCard } from "./SummaryCard";
+import { Toggle } from "./Toggle";
 
 type PartitionedDuplicatesTableProps = {
   user: string;
@@ -19,14 +21,17 @@ export const PartitionedDuplicatesTable = ({
   isDuplicateEntity,
   getEntityLink,
 }: PartitionedDuplicatesTableProps) => {
+  const [useRules, setUseRules] = useState(true);
+
   const duplicates = getPartitionedDuplicates({
     entities,
     isDuplicateEntity,
-    useRules: true,
+    useRules,
   });
 
   return (
     <>
+      <Toggle isEnabled={useRules} onToggle={setUseRules} label="Use rules" />
       <SummaryCard duplicates={duplicates} />
       {[...duplicates.entries()].map(([artist, matches]) => (
         <div

@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { getDuplicates } from "../logic";
 import { SummaryCard } from "./SummaryCard";
+import { Toggle } from "./Toggle";
 
 type DuplicatesTableProps = {
   user: string;
@@ -18,14 +20,17 @@ export const DuplicatesTable = ({
   isDuplicateEntity,
   getEntityLink,
 }: DuplicatesTableProps) => {
+  const [useRules, setUseRules] = useState(true);
+
   const duplicates = getDuplicates({
     entities,
     isDuplicateEntity,
-    useRules: true,
+    useRules,
   });
 
   return (
     <>
+      <Toggle isEnabled={useRules} onToggle={setUseRules} label="Use rules" />
       <SummaryCard duplicates={duplicates} />
       <table className="w-full border-collapse border border-gray-600">
         <tbody>

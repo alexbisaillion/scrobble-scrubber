@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { ValidationError } from "../api/validators/types";
 
-export type UseGetDuplicatesProps<T> = {
+export type UseGetAllEntitiesProps<T> = {
   user: string;
   getNumEntities: (user: string) => Promise<number | ValidationError>;
   getEntities: (user: string, page: number) => Promise<T[] | ValidationError>;
@@ -13,7 +13,7 @@ export const useGetAllEntities = <T>({
   user,
   getNumEntities,
   getEntities,
-}: UseGetDuplicatesProps<T>) => {
+}: UseGetAllEntitiesProps<T>) => {
   const [numEntities, setNumEntities] = useState(-1);
   const [page, setPage] = useState(-1);
   const [numPages, setNumPages] = useState(-1);

@@ -1,2 +1,2 @@
 export { useGetAllEntities } from "./useGetAllEntities";
-export type { UseGetDuplicatesProps } from "./useGetAllEntities";
+export type { UseGetAllEntitiesProps } from "./useGetAllEntities";
