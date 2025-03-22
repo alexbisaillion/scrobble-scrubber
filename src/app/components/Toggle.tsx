@@ -16,7 +16,7 @@ export const Toggle: React.FC<ToggleProps> = ({
       <label className="flex items-center gap-2 cursor-pointer">
         <div
           className={`relative w-12 h-7 rounded-full transition ${
-            isEnabled ? "bg-blue-500" : "bg-gray-500"
+            isEnabled ? "bg-blue-600" : "bg-gray-500"
           }`}
           onClick={() => onToggle(!isEnabled)}
         >

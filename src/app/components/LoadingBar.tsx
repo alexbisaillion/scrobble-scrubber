@@ -12,7 +12,7 @@ export const LoadingBar = ({ percentage }: LoadingBarProps) => {
       }`}
     >
       <div
-        className="h-full bg-blue-500 transition-all duration-300 ease-in-out"
+        className="h-full bg-blue-600 transition-all duration-300 ease-in-out"
         style={{ width: `${clampedPercentage}%` }}
       />
     </div>

@@ -1,3 +1,5 @@
+import { Button } from "./Button";
+
 type Duplicates =
   | Map<
       string,
@@ -93,18 +95,16 @@ export const SummaryCard = ({ duplicates }: SummaryCardProps) => {
         </p>
       </div>
       <div className="flex space-x-4">
-        <button
+        <Button
           onClick={handleDownloadCSV}
-          className="px-4 py-2 bg-green-600 text-white rounded-md cursor-pointer"
-        >
-          Download as CSV
-        </button>
-        <button
+          label="Download as CSV"
+          fill="bg-green-600"
+        />
+        <Button
           onClick={handleDownloadJSON}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md cursor-pointer"
-        >
-          Download as JSON
-        </button>
+          label="Download as JSON"
+          fill="bg-blue-600"
+        />
       </div>
     </div>
   );

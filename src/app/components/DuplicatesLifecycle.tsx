@@ -2,6 +2,7 @@ import { JSX } from "react";
 import { useGetAllEntities, UseGetAllEntitiesProps } from "../hooks";
 import { EntityType } from "../types";
 import { DuplicatesLoadingBar } from "./DuplicatesLoadingBar";
+import { Button } from "./Button";
 
 type DuplicatesLifecycleProps<T> = {
   entityType: EntityType;
@@ -46,12 +47,7 @@ export const DuplicatesLifecycle = <T,>({
 
   return (
     <>
-      <button
-        className="px-4 py-2 bg-blue-500 cursor-pointer text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-blue-600 dark:hover:bg-blue-700"
-        onClick={reset}
-      >
-        Reset
-      </button>
+      <Button label="Reset" fill="bg-blue-600" onClick={reset} />
       {renderContent()}
     </>
   );

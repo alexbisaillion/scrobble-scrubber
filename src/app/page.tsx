@@ -1,7 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { DuplicatesContent, InfoButton, TopEntityForm } from "./components";
+import {
+  Button,
+  DuplicatesContent,
+  InfoButton,
+  TopEntityForm,
+} from "./components";
 import { EntityType } from "./types";
 
 export default function Home() {
@@ -32,7 +37,17 @@ export default function Home() {
           Split Scrobble Finder V2
         </h2>
         <div className="flex items-center gap-4">
-          <span>Powered by last.fm</span>
+          <Button
+            label="Powered by last.fm"
+            fill="bg-white/10"
+            onClick={() =>
+              window.open(
+                "https://www.last.fm",
+                "_blank",
+                "noopener,noreferrer"
+              )
+            }
+          />
           <InfoButton />
         </div>
         {content}
