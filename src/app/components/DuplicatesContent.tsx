@@ -10,14 +10,14 @@ import {
 } from "../api";
 import { Album, Artist, EntityType, Track } from "../types";
 import { DuplicatesLifecycle } from "./DuplicatesLifecycle";
-import { PartitionedDuplicatesTable } from "./PartitionedDuplicatesTable";
+import { PartitionedDuplicatesResultsContent } from "./PartitionedDuplicatesResultsContent";
 import {
   isDuplicateAlbum,
   isDuplicateArtist,
   isDuplicateTrack,
 } from "../logic";
 import { getAlbumLink, getArtistLink, getTrackLink } from "../utils";
-import { DuplicatesTable } from "./DuplicatesTable";
+import { DuplicateResultsContent } from "./DuplicatesResultsContent";
 import { sortEntities } from "../logic/sortEntities";
 import { getPartitionedEntities } from "../logic/getPartitionedEntities";
 
@@ -50,7 +50,7 @@ const entityMethods: {
     getNumEntities: getNumTracks,
     getEntities: getTracks,
     renderDuplicates: (tracks, user) => (
-      <PartitionedDuplicatesTable
+      <PartitionedDuplicatesResultsContent
         user={user}
         entities={tracks}
         isDuplicateEntity={(trackA, trackB, useRules) =>
@@ -82,7 +82,7 @@ const entityMethods: {
     getNumEntities: getNumAlbums,
     getEntities: getAlbums,
     renderDuplicates: (albums, user) => (
-      <PartitionedDuplicatesTable
+      <PartitionedDuplicatesResultsContent
         user={user}
         entities={albums}
         isDuplicateEntity={(albumA, albumB, useRules) =>
@@ -114,7 +114,7 @@ const entityMethods: {
     getNumEntities: getNumArtists,
     getEntities: getArtists,
     renderDuplicates: (artists, user) => (
-      <DuplicatesTable
+      <DuplicateResultsContent
         user={user}
         entities={artists.map(({ name }) => name)}
         isDuplicateEntity={isDuplicateArtist}
