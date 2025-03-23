@@ -18,6 +18,8 @@ import {
 } from "../logic";
 import { getAlbumLink, getArtistLink, getTrackLink } from "../utils";
 import { DuplicatesTable } from "./DuplicatesTable";
+import { sortEntities } from "../logic/sortEntities";
+import { getPartitionedEntities } from "../logic/getPartitionedEntities";
 
 type EntityTypeMap = {
   tracks: Track;
@@ -51,8 +53,28 @@ const entityMethods: {
       <PartitionedDuplicatesTable
         user={user}
         entities={tracks}
-        isDuplicateEntity={isDuplicateTrack}
+        isDuplicateEntity={(trackA, trackB, useRules) =>
+          isDuplicateTrack(trackA.name, trackB.name, useRules)
+        }
         getEntityLink={getTrackLink}
+        getEntityDisplayText={(track) => track.name}
+        getEntityJsonRepresentation={(track) => ({
+          artist: track.artist,
+          name: track.name,
+          url: getTrackLink(track, user),
+        })}
+        getHeaders={() => [
+          "Track A Artist",
+          "Track A Name",
+          "Track A URL",
+          "Track B Artist",
+          "Track B Name",
+          "Track B URL",
+        ]}
+        sortEntities={(trackA, trackB) =>
+          sortEntities(trackA.name, trackB.name)
+        }
+        getPartitionedEntities={getPartitionedEntities}
       />
     ),
   },
@@ -63,8 +85,28 @@ const entityMethods: {
       <PartitionedDuplicatesTable
         user={user}
         entities={albums}
-        isDuplicateEntity={isDuplicateAlbum}
+        isDuplicateEntity={(albumA, albumB, useRules) =>
+          isDuplicateAlbum(albumA.name, albumB.name, useRules)
+        }
         getEntityLink={getAlbumLink}
+        getEntityDisplayText={(album) => album.name}
+        getEntityJsonRepresentation={(album) => ({
+          artist: album.artist,
+          name: album.name,
+          url: getAlbumLink(album, user),
+        })}
+        getHeaders={() => [
+          "Album A Artist",
+          "Album A Name",
+          "Album A URL",
+          "Album B Artist",
+          "Album B Name",
+          "Album B URL",
+        ]}
+        sortEntities={(albumA, albumB) =>
+          sortEntities(albumA.name, albumB.name)
+        }
+        getPartitionedEntities={getPartitionedEntities}
       />
     ),
   },
@@ -77,6 +119,18 @@ const entityMethods: {
         entities={artists.map(({ name }) => name)}
         isDuplicateEntity={isDuplicateArtist}
         getEntityLink={getArtistLink}
+        getEntityDisplayText={(artist) => artist}
+        getEntityJsonRepresentation={(artist) => ({
+          name: artist,
+          url: getArtistLink(artist, user),
+        })}
+        getHeaders={() => [
+          "Artist A",
+          "Artist A URL",
+          "Artist B",
+          "Artist B URL",
+        ]}
+        sortEntities={sortEntities}
       />
     ),
   },

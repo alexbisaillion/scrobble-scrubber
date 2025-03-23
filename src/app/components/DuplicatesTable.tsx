@@ -3,60 +3,71 @@ import { getDuplicates } from "../logic";
 import { SummaryCard } from "./SummaryCard";
 import { Toggle } from "./Toggle";
 
-type DuplicatesTableProps = {
+type DuplicatesTableProps<T> = {
   user: string;
-  entities: string[];
-  isDuplicateEntity: (
-    entityA: string,
-    entityB: string,
-    useRules: boolean
-  ) => boolean;
-  getEntityLink: (entity: string, user: string) => string;
+  entities: T[];
+  isDuplicateEntity: (entityA: T, entityB: T, useRules: boolean) => boolean;
+  getEntityDisplayText: (entity: T) => string;
+  getEntityLink: (entity: T, user: string) => string;
+  sortEntities: (entityA: T, entityB: T) => number;
+  getHeaders: () => string[];
+  getEntityJsonRepresentation: (entity: T) => Record<string, string>;
 };
 
-export const DuplicatesTable = ({
+export const DuplicatesTable = <T,>({
   user,
   entities,
   isDuplicateEntity,
+  getEntityDisplayText,
   getEntityLink,
-}: DuplicatesTableProps) => {
+  sortEntities,
+  getHeaders,
+  getEntityJsonRepresentation,
+}: DuplicatesTableProps<T>) => {
   const [useRules, setUseRules] = useState(true);
 
   const duplicates = getDuplicates({
     entities,
     isDuplicateEntity,
+    sortEntities,
     useRules,
   });
 
   return (
     <>
       <Toggle isEnabled={useRules} onToggle={setUseRules} label="Use rules" />
-      <SummaryCard duplicates={duplicates} />
+      <SummaryCard
+        duplicates={duplicates}
+        getEntityJsonRepresentation={getEntityJsonRepresentation}
+        getHeaders={getHeaders}
+      />
       <table className="w-full border-collapse border border-gray-600">
         <tbody>
-          {duplicates.map(({ entity1, entity2 }, index) => (
+          {duplicates.map(({ entityA, entityB }, index) => (
             <tr
-              key={`${entity1}-${entity2}`}
+              key={`${getEntityDisplayText(entityA)}-${getEntityDisplayText(
+                entityB
+              )}`}
               className={index % 2 === 0 ? "bg-gray-800" : "bg-gray-700"}
             >
               <td className="px-4 py-2 w-1/2 border-t border-gray-600">
                 <a
                   className="hover:opacity-75"
-                  href={getEntityLink(entity1, user)}
+                  href={getEntityLink(entityA, user)}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {entity1}
+                  {getEntityDisplayText(entityA)}
                 </a>
               </td>
               <td className="px-4 py-2 w-1/2 border-t border-gray-600">
                 <a
                   className="hover:opacity-75"
-                  href={getEntityLink(entity2, user)}
+                  href={getEntityLink(entityB, user)}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {entity2}
+                  {getEntityDisplayText(entityB)}
                 </a>
               </td>
             </tr>

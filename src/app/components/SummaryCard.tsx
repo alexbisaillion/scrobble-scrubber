@@ -1,41 +1,28 @@
+import { DuplicateMatch } from "../types";
 import { Button } from "./Button";
 
-type Duplicates =
-  | Map<
-      string,
-      {
-        entity1: string;
-        entity2: string;
-      }[]
-    >
-  | {
-      entity1: string;
-      entity2: string;
-    }[];
-
-type SummaryCardProps = {
-  duplicates: Duplicates;
+type SummaryCardProps<T> = {
+  duplicates: DuplicateMatch<T>[];
+  getEntityJsonRepresentation: (entity: T) => Record<string, string>;
+  getHeaders: () => string[];
 };
 
-const downloadCSV = (duplicates: Duplicates) => {
-  const csvRows = [];
+const downloadCSV = <T,>({
+  duplicates,
+  getEntityJsonRepresentation,
+  getHeaders,
+}: SummaryCardProps<T>) => {
+  const csvRows: string[] = [];
 
-  const headers =
-    duplicates instanceof Map
-      ? ["Artist", "Match1", "Match2"]
-      : ["Match1", "Match2"];
-  csvRows.push(headers.join(","));
+  csvRows.push(getHeaders().join(","));
 
-  if (duplicates instanceof Map) {
-    for (const [artist, matches] of duplicates) {
-      for (const match of matches) {
-        csvRows.push([artist, match.entity1, match.entity2].join(","));
-      }
-    }
-  } else {
-    for (const row of duplicates) {
-      csvRows.push([row.entity1, row.entity2].join(","));
-    }
+  for (const { entityA, entityB } of duplicates) {
+    csvRows.push(
+      [
+        ...Object.values(getEntityJsonRepresentation(entityA)),
+        ...Object.values(getEntityJsonRepresentation(entityB)),
+      ].join(",")
+    );
   }
 
   const csvContent = csvRows.join("\n");
@@ -46,52 +33,47 @@ const downloadCSV = (duplicates: Duplicates) => {
   link.click();
 };
 
-const downloadJSON = (duplicates: Duplicates) => {
-  const jsonObj =
-    duplicates instanceof Map
-      ? Object.fromEntries(
-          [...duplicates].map(([key, value]) => [
-            key,
-            value.map(({ entity1, entity2 }) => ({
-              match1: entity1,
-              match2: entity2,
-            })),
-          ])
-        )
-      : duplicates.map(({ entity1, entity2 }) => ({
-          match1: entity1,
-          match2: entity2,
-        }));
-
-  const blob = new Blob([JSON.stringify(jsonObj, null, 2)], {
-    type: "application/json",
-  });
+const downloadJSON = <T,>({
+  duplicates,
+  getEntityJsonRepresentation,
+}: SummaryCardProps<T>) => {
+  const blob = new Blob(
+    [
+      JSON.stringify(
+        duplicates.map(({ entityA, entityB }) => ({
+          entityA: getEntityJsonRepresentation(entityA),
+          entityB: getEntityJsonRepresentation(entityB),
+        })),
+        null,
+        2
+      ),
+    ],
+    {
+      type: "application/json",
+    }
+  );
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
   link.download = "duplicates.json";
   link.click();
 };
 
-export const SummaryCard = ({ duplicates }: SummaryCardProps) => {
+export const SummaryCard = <T,>(props: SummaryCardProps<T>) => {
+  const { duplicates } = props;
   const handleDownloadCSV = () => {
-    downloadCSV(duplicates);
+    downloadCSV(props);
   };
 
   const handleDownloadJSON = () => {
-    downloadJSON(duplicates);
+    downloadJSON(props);
   };
-
-  const numDuplicates =
-    duplicates instanceof Map
-      ? [...duplicates.values()].flat().length
-      : duplicates.length;
 
   return (
     <div className="p-4 bg-gray-800 rounded-lg shadow-lg">
       <h2 className="text-xl text-gray-200 font-semibold mb-4">Summary</h2>
       <div className="text-gray-400 mb-4">
         <p>
-          <strong>{numDuplicates}</strong> duplicates found.
+          <strong>{duplicates.length}</strong> duplicates found.
         </p>
       </div>
       <div className="flex space-x-4">

@@ -1,31 +1,24 @@
-import { getDuplicates } from "./getDuplicates";
-import { getPartitionedEntities } from "./getPartitionedEntities";
+import { DuplicateMatch } from "../types";
+import { getDuplicates, GetDuplicatesParams } from "./getDuplicates";
 
-type GetPartitionedDuplicatesParams = {
-  entities: {
-    artist: string;
-    name: string;
-  }[];
-  isDuplicateEntity: (
-    entity1: string,
-    entity2: string,
-    useRules: boolean
-  ) => boolean;
-  useRules: boolean;
+type GetPartitionedDuplicatesParams<T> = GetDuplicatesParams<T> & {
+  getPartitionedEntities: (entities: T[]) => Map<string, T[]>;
 };
 
-export const getPartitionedDuplicates = ({
+export const getPartitionedDuplicates = <T>({
   entities,
   isDuplicateEntity,
+  sortEntities,
   useRules,
-}: GetPartitionedDuplicatesParams) => {
+  getPartitionedEntities,
+}: GetPartitionedDuplicatesParams<T>): Map<string, DuplicateMatch<T>[]> => {
   const partitions = getPartitionedEntities(entities);
-  const duplicates: Map<string, { entity1: string; entity2: string }[]> =
-    new Map();
+  const duplicates: Map<string, DuplicateMatch<T>[]> = new Map();
   for (const [artist, entities] of partitions) {
     const matches = getDuplicates({
       entities,
       isDuplicateEntity,
+      sortEntities,
       useRules,
     });
     if (matches.length) {

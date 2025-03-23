@@ -15,3 +15,8 @@ export type Artist = {
 };
 
 export type Entity = Track | Album | Artist;
+
+export type DuplicateMatch<T> = {
+  entityA: T;
+  entityB: T;
+};

@@ -1,25 +1,23 @@
-import { sortEntities } from "./sortEntities";
+import { DuplicateMatch } from "../types";
 
-type GetDuplicatesParams = {
-  entities: string[];
-  isDuplicateEntity: (
-    entity1: string,
-    entity2: string,
-    useRules: boolean
-  ) => boolean;
+export type GetDuplicatesParams<T> = {
+  entities: T[];
+  isDuplicateEntity: (entityA: T, entityB: T, useRules: boolean) => boolean;
+  sortEntities: (entityA: T, entityB: T) => number;
   useRules: boolean;
 };
 
-export const getDuplicates = ({
+export const getDuplicates = <T>({
   entities,
   isDuplicateEntity,
+  sortEntities,
   useRules,
-}: GetDuplicatesParams) => {
-  entities.sort((entityA, entityB) => sortEntities(entityA, entityB));
-  const matches: { entity1: string; entity2: string }[] = [];
+}: GetDuplicatesParams<T>) => {
+  entities.sort(sortEntities);
+  const matches: DuplicateMatch<T>[] = [];
   for (let i = 0; i < entities.length - 1; i++) {
     if (isDuplicateEntity(entities[i], entities[i + 1], useRules)) {
-      matches.push({ entity1: entities[i], entity2: entities[i + 1] });
+      matches.push({ entityA: entities[i], entityB: entities[i + 1] });
     }
   }
   return matches;
