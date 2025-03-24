@@ -1,5 +1,5 @@
 import { DuplicateMatch } from "../types";
-import { Button } from "./Button";
+import { Button } from "./common";
 
 type SummaryCardProps<T> = {
   duplicates: DuplicateMatch<T>[];

@@ -1,5 +1,5 @@
 import { EntityType } from "../types";
-import { LoadingBar } from "./LoadingBar";
+import { LoadingBar } from "./common";
 
 type DuplicatesLoadingBar = {
   entityType: EntityType;

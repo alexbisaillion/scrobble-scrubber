@@ -15,11 +15,11 @@ import {
   isDuplicateAlbum,
   isDuplicateArtist,
   isDuplicateTrack,
+  sortEntities,
+  getPartitionedEntities,
 } from "../logic";
 import { getAlbumLink, getArtistLink, getTrackLink } from "../utils";
 import { DuplicateResultsContent } from "./DuplicatesResultsContent";
-import { sortEntities } from "../logic/sortEntities";
-import { getPartitionedEntities } from "../logic/getPartitionedEntities";
 
 type EntityTypeMap = {
   tracks: Track;

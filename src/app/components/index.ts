@@ -1,4 +1,4 @@
 export { TopEntityForm } from "./TopEntityForm";
 export { DuplicatesContent } from "./DuplicatesContent";
 export { InfoButton } from "./InfoButton";
-export { Button } from "./Button";
+export { Button } from "./common";

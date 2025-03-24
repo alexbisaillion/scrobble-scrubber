@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { getPartitionedDuplicates } from "../logic";
 import { SummaryCard } from "./SummaryCard";
-import { Toggle } from "./Toggle";
+import { Toggle } from "./common";
 import { DuplicateTable, DuplicateTableHeader } from "./table";
 
 type PartitionedDuplicatesTableProps<T> = {

@@ -2,7 +2,7 @@ import { JSX } from "react";
 import { useGetAllEntities, UseGetAllEntitiesProps } from "../hooks";
 import { EntityType } from "../types";
 import { DuplicatesLoadingBar } from "./DuplicatesLoadingBar";
-import { Button } from "./Button";
+import { Button } from "./common";
 
 type DuplicatesLifecycleProps<T> = {
   entityType: EntityType;

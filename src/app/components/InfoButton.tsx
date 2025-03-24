@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Button } from "./Button";
+import { Button } from "./common";
 
 export const InfoButton = () => {
   const [isOpen, setIsOpen] = useState(false);

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { getDuplicates } from "../logic";
 import { SummaryCard } from "./SummaryCard";
-import { Toggle } from "./Toggle";
+import { Toggle } from "./common";
 import { DuplicateTable } from "./table";
 
 type DuplicatesTableProps<T> = {

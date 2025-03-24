@@ -1,5 +1,5 @@
 import { EntityType } from "../types";
-import { Button } from "./Button";
+import { Button } from "./common";
 
 type TopEntityFormProps = {
   user: string;
