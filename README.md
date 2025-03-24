@@ -1,8 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Split Scrobble Finder V2
+
+---
+
+![image](img/screenshot.jpg)
+
+## Background
+
+This web app allows you to scan your Last.fm profile for split scrobbles, which can arise when streaming services change the metadata of a track, album or artist, such as adding a feature tag to the track title.
+
+Switching between music streaming platforms can also create split entries in your Last.fm profile, given that metadata is generally not standardized among all platforms.
+
+This is V2 of the app, as my [first version](https://github.com/alexbisaillion/split-scrobble-finder) fell into disrepair when Heroku removed its free tier.
+
+## Usage
+
+The app is live at https://split-scrobble-finder-v2.vercel.app/.
+
+Simply input your username and select either tracks, albums, or artists to scan your profile for split scrobbles.
+
+There is an option to "use rules". Selecting this option will use a custom rule set I developed to help eliminate false split scrobbles. For example, "Human After All" and "Human After All - SebastiAn Remix" would not be detected as split scrobbles if the rule set is enabled. Otherwise, standard string similarity would be used, which would result in those two tracks being detected as a duplicate.
+
+I recommend trying requests in both fashions. If you find that the rule set fails to detect true split scrobbles or falsely identifies split scrobbles, feel free to raise an issue here on GitHub or message me with the issue. The rule set algorithm can always be improved!
+
+Note that request times can be significant, as it requires numerous strenuous calls to the Last.fm API.
+
+Once your results have been fetched, you can scroll through the detected split entries, where each entry provides a hyperlink to the specified track/album/artist in your library on the Last.fm site. You can then edit the scrobbles as desired on Last.fm.
+
+You can also download your results in either JSON or CSV format, so you don't have to keep waiting for your results to be generated if you want to view your results again.
 
 ## Getting Started
 
-First, run the development server:
+To run this app locally, you must have your own Last.fm API credentials. See [here](https://www.last.fm/api/account/create) for more details.
+
+Once you have an API key, create a `.env.local` file in the root directory and add the key. The file should look as follows:
+
+```
+LAST_FM_API_KEY=somealphanumericvalue
+```
+
+Next, run the development server:
 
 ```bash
 npm run dev
@@ -16,21 +52,18 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Testing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+There is a set of tests written to ensure the duplication detection algorithm works for various tag differences I have found in my own library.
 
-## Learn More
+Simply run the following in the root directory to run these tests:
 
-To learn more about Next.js, take a look at the following resources:
+```
+npm run test
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Technical Specs
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The dependencies for this have been kept to a bare minimum, relying only on React and Next.js. Tailwind is used for the CSS. Keeping the app lightweight ensures it won't fall into disrepair again due to outdated dependencies.
