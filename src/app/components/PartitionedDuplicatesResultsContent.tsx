@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { getPartitionedDuplicates } from "../logic";
 import { SummaryCard } from "./SummaryCard";
-import { Toggle } from "./common";
+import { Button, Toggle } from "./common";
 import { DuplicateTable, DuplicateTableHeader } from "./table";
 
 type PartitionedDuplicatesTableProps<T> = {
@@ -29,33 +29,78 @@ export const PartitionedDuplicatesResultsContent = <T,>({
 }: PartitionedDuplicatesTableProps<T>) => {
   const [useRules, setUseRules] = useState(true);
 
-  const duplicates = getPartitionedDuplicates({
-    entities,
-    isDuplicateEntity,
-    sortEntities,
-    useRules,
-    getPartitionedEntities,
-  });
+  const duplicates = useMemo(
+    () =>
+      getPartitionedDuplicates({
+        entities,
+        isDuplicateEntity,
+        sortEntities,
+        useRules,
+        getPartitionedEntities,
+      }),
+    [
+      entities,
+      isDuplicateEntity,
+      sortEntities,
+      useRules,
+      getPartitionedEntities,
+    ]
+  );
+
+  const [tableIndex, setTableIndex] = useState(0);
+
+  const incrementTableIndex = () => {
+    setTableIndex((prevIndex) => (prevIndex + 1) % duplicates.length);
+  };
+
+  const decrementTableIndex = () => {
+    setTableIndex(
+      (prevIndex) => (prevIndex - 1 + duplicates.length) % duplicates.length
+    );
+  };
+
+  const renderTable = () => {
+    if (duplicates.length === 0) {
+      return <div>No duplicates found</div>;
+    }
+
+    const [key, matches] = duplicates[tableIndex];
+
+    return (
+      <DuplicateTable
+        tableHeader={<DuplicateTableHeader header={key} />}
+        duplicates={matches}
+        getEntityDisplayText={getEntityDisplayText}
+        getEntityLink={getEntityLink}
+        user={user}
+      />
+    );
+  };
 
   return (
     <>
-      <Toggle isEnabled={useRules} onToggle={setUseRules} label="Use rules" />
+      <Toggle
+        isEnabled={useRules}
+        onToggle={(value) => {
+          setTableIndex(0);
+          setUseRules(value);
+        }}
+        label="Use rules"
+      />
       <SummaryCard
         duplicates={[...duplicates.map(([, list]) => list)].flat()}
         getEntityJsonRepresentation={getEntityJsonRepresentation}
         getHeaders={getHeaders}
       />
-      {duplicates.map(([key, matches]) => (
-        <div key={key} className="flex flex-col items-center w-full space-y-4">
-          <DuplicateTable
-            tableHeader={<DuplicateTableHeader header={key} />}
-            duplicates={matches}
-            getEntityDisplayText={getEntityDisplayText}
-            getEntityLink={getEntityLink}
-            user={user}
-          />
-        </div>
-      ))}
+      <div className="flex gap-4">
+        <Button
+          onClick={decrementTableIndex}
+          fill="bg-blue-600"
+          label="Previous"
+        />
+        <Button onClick={incrementTableIndex} fill="bg-blue-600" label="Next" />
+      </div>
+      {renderTable()}
     </>
   );
 };
