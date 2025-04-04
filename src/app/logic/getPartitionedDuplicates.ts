@@ -11,7 +11,7 @@ export const getPartitionedDuplicates = <T>({
   sortEntities,
   useRules,
   getPartitionedEntities,
-}: GetPartitionedDuplicatesParams<T>): Map<string, DuplicateMatch<T>[]> => {
+}: GetPartitionedDuplicatesParams<T>): [string, DuplicateMatch<T>[]][] => {
   const partitions = getPartitionedEntities(entities);
   const duplicates: Map<string, DuplicateMatch<T>[]> = new Map();
   for (const [artist, entities] of partitions) {
@@ -25,5 +25,12 @@ export const getPartitionedDuplicates = <T>({
       duplicates.set(artist, matches);
     }
   }
-  return duplicates;
+
+  const allPartitions = [...duplicates.entries()];
+
+  allPartitions.sort(
+    ([, matchesA], [, matchesB]) => matchesB.length - matchesA.length
+  );
+
+  return allPartitions;
 };

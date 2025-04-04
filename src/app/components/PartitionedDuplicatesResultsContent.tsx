@@ -41,11 +41,11 @@ export const PartitionedDuplicatesResultsContent = <T,>({
     <>
       <Toggle isEnabled={useRules} onToggle={setUseRules} label="Use rules" />
       <SummaryCard
-        duplicates={[...duplicates.values()].flat()}
+        duplicates={[...duplicates.map(([, list]) => list)].flat()}
         getEntityJsonRepresentation={getEntityJsonRepresentation}
         getHeaders={getHeaders}
       />
-      {[...duplicates.entries()].map(([key, matches]) => (
+      {duplicates.map(([key, matches]) => (
         <div key={key} className="flex flex-col items-center w-full space-y-4">
           <DuplicateTable
             tableHeader={<DuplicateTableHeader header={key} />}
