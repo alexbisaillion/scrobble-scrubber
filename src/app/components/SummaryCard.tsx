@@ -69,14 +69,13 @@ export const SummaryCard = <T,>(props: SummaryCardProps<T>) => {
   };
 
   return (
-    <div className="p-4 bg-gray-800 rounded-lg shadow-lg">
-      <h2 className="text-xl text-gray-200 font-semibold mb-4">Summary</h2>
+    <div className="flex items-center p-4">
       <div className="text-gray-400 mb-4">
         <p>
           <strong>{duplicates.length}</strong> duplicates found.
         </p>
       </div>
-      <div className="flex space-x-4">
+      <div className="flex">
         <Button
           onClick={handleDownloadCSV}
           label="Download as CSV"

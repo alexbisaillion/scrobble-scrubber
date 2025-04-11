@@ -79,6 +79,11 @@ export const PartitionedDuplicatesResultsContent = <T,>({
 
   return (
     <>
+      <SummaryCard
+        duplicates={[...duplicates.map(([, list]) => list)].flat()}
+        getEntityJsonRepresentation={getEntityJsonRepresentation}
+        getHeaders={getHeaders}
+      />
       <Toggle
         isEnabled={useRules}
         onToggle={(value) => {
@@ -86,11 +91,6 @@ export const PartitionedDuplicatesResultsContent = <T,>({
           setUseRules(value);
         }}
         label="Use rules"
-      />
-      <SummaryCard
-        duplicates={[...duplicates.map(([, list]) => list)].flat()}
-        getEntityJsonRepresentation={getEntityJsonRepresentation}
-        getHeaders={getHeaders}
       />
       <div className="flex gap-4">
         <Button
