@@ -21,6 +21,7 @@ import {
 import { getAlbumLink, getArtistLink, getTrackLink } from "../utils";
 import { DuplicateResultsContent } from "./DuplicatesResultsContent";
 import { TabGroup } from "./common";
+import { SearchResultsContent } from "./SearchResultsContent";
 
 type EntityTypeMap = {
   tracks: Track;
@@ -54,10 +55,6 @@ const entityMethods: {
       <TabGroup
         tabs={[
           {
-            header: "Search",
-            content: <p key="p">pushin p</p>,
-          },
-          {
             header: "Duplicates",
             content: (
               <PartitionedDuplicatesResultsContent
@@ -86,6 +83,28 @@ const entityMethods: {
                   sortEntities(trackA.name, trackB.name)
                 }
                 getPartitionedEntities={getPartitionedEntities}
+              />
+            ),
+          },
+          {
+            header: "Search",
+            content: (
+              <SearchResultsContent
+                user={user}
+                entities={tracks}
+                searchEntity={(track, searchTerm) =>
+                  track.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                  track.artist.toLowerCase().includes(searchTerm.toLowerCase())
+                }
+                getEntityDisplayText={({ artist, name }) =>
+                  `${artist} - ${name}`
+                }
+                getEntityLink={getTrackLink}
+                getEntityJsonRepresentation={(track) => ({
+                  artist: track.artist,
+                  name: track.name,
+                  url: getTrackLink(track, user),
+                })}
               />
             ),
           },

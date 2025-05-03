@@ -78,7 +78,7 @@ export const PartitionedDuplicatesResultsContent = <T,>({
   };
 
   return (
-    <>
+    <div className="flex flex-col p-4 items-center gap-4">
       <SummaryCard
         duplicates={[...duplicates.map(([, list]) => list)].flat()}
         getEntityJsonRepresentation={getEntityJsonRepresentation}
@@ -101,6 +101,6 @@ export const PartitionedDuplicatesResultsContent = <T,>({
         <Button onClick={incrementTableIndex} fill="bg-blue-600" label="Next" />
       </div>
       {renderTable()}
-    </>
+    </div>
   );
 };

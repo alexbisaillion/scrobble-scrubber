@@ -69,13 +69,13 @@ export const SummaryCard = <T,>(props: SummaryCardProps<T>) => {
   };
 
   return (
-    <div className="flex items-center p-4">
-      <div className="text-gray-400 mb-4">
+    <>
+      <div className="text-gray-400">
         <p>
           <strong>{duplicates.length}</strong> duplicates found.
         </p>
       </div>
-      <div className="flex">
+      <div className="flex gap-4">
         <Button
           onClick={handleDownloadCSV}
           label="Download as CSV"
@@ -87,6 +87,6 @@ export const SummaryCard = <T,>(props: SummaryCardProps<T>) => {
           fill="bg-blue-600"
         />
       </div>
-    </div>
+    </>
   );
 };
