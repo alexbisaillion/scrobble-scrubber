@@ -68,17 +68,24 @@ export const SearchResultsContent = <T,>({
 
   return (
     <div className="flex flex-col gap-4 p-4 justify-center items-center">
-      <div className="flex gap-4 items-center justify-center">
-        <input
-          placeholder='Search for keywords like "Remastered" or "Deluxe"'
-          type="text"
-          value={searchTerm || ""}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          required
-          className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:border-gray-600 dark:text-white w-md"
-        />
-        <Button onClick={onApplySearch} label="Search" fill="bg-blue-600" />
-      </div>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          onApplySearch();
+        }}
+      >
+        <div className="flex gap-4 items-center justify-center">
+          <input
+            placeholder='Search for keywords like "Remastered" or "Deluxe"'
+            type="text"
+            value={searchTerm || ""}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            required
+            className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:border-gray-600 dark:text-white w-md"
+          />
+          <Button onClick={onApplySearch} label="Search" fill="bg-blue-600" />
+        </div>
+      </form>
       {renderSearchResults()}
     </div>
   );
