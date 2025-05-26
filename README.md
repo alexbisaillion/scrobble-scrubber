@@ -16,7 +16,7 @@ You can also search all fetched items for a specific keyword you'd like to clean
 
 ## Usage
 
-The app is live at https://split-scrobble-finder-v2.vercel.app/.
+The app is live at https://scrobble-scrubber.vercel.app/.
 
 Simply input your username and select either tracks, albums, or artists to scan your profile for split scrobbles.
 

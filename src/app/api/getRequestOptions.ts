@@ -38,7 +38,7 @@ export const getRequestOptions = (params: GetURLParams) => {
   return {
     url: getURL(params),
     headers: {
-      "User-Agent": "split-scrobble-finder",
+      "User-Agent": "scrobble-scrubber",
     },
   };
 };
