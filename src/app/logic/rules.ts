@@ -49,6 +49,12 @@ export function isDuplicateTrack(
   track2: string,
   useRules: boolean
 ) {
+  if (track1.toLocaleLowerCase() === track2.toLocaleLowerCase()) {
+    // Skip exact matches -- some Last.fm libraries have exact matches.
+    // Unsure why but it appears to affect soundtracks quite a bit.
+    return false;
+  }
+
   if (!useRules) {
     return compareTwoStrings(track1, track2) > 0.5;
   }
@@ -71,6 +77,12 @@ export function isDuplicateAlbum(
   album2: string,
   useRules: boolean
 ) {
+  if (album1.toLocaleLowerCase() === album2.toLocaleLowerCase()) {
+    // Skip exact matches -- some Last.fm libraries have exact matches.
+    // Unsure why but it appears to affect soundtracks quite a bit.
+    return false;
+  }
+
   if (!useRules) {
     return compareTwoStrings(album1, album2) > 0.5;
   }
@@ -97,6 +109,12 @@ export function isDuplicateArtist(
   artist2: string,
   useRules: boolean
 ) {
+  if (artist1.toLocaleLowerCase() === artist2.toLocaleLowerCase()) {
+    // Skip exact matches -- some Last.fm libraries have exact matches.
+    // Unsure why but it appears to affect soundtracks quite a bit.
+    return false;
+  }
+
   if (!useRules) {
     return compareTwoStrings(artist1, artist2) > 0.5;
   }
