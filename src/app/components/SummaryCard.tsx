@@ -12,17 +12,26 @@ const downloadCSV = <T,>({
   getEntityJsonRepresentation,
   getHeaders,
 }: SummaryCardProps<T>) => {
+  const escapeCSVValue = (value: string): string => {
+    const needsEscaping =
+      value.includes(",") || value.includes('"') || value.includes("\n");
+    if (needsEscaping) {
+      return `"${value.replace(/"/g, '""')}"`;
+    }
+    return value;
+  };
+
   const csvRows: string[] = [];
 
-  csvRows.push(getHeaders().join(","));
+  csvRows.push(getHeaders().map(escapeCSVValue).join(","));
 
   for (const { entityA, entityB } of duplicates) {
-    csvRows.push(
-      [
-        ...Object.values(getEntityJsonRepresentation(entityA)),
-        ...Object.values(getEntityJsonRepresentation(entityB)),
-      ].join(",")
-    );
+    const values = [
+      ...Object.values(getEntityJsonRepresentation(entityA)),
+      ...Object.values(getEntityJsonRepresentation(entityB)),
+    ].map(escapeCSVValue);
+
+    csvRows.push(values.join(","));
   }
 
   const csvContent = csvRows.join("\n");
