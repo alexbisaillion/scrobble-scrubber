@@ -116,31 +116,62 @@ const entityMethods: {
     getNumEntities: getNumAlbums,
     getEntities: getAlbums,
     renderDuplicates: (albums, user) => (
-      <PartitionedDuplicatesResultsContent
-        user={user}
-        entities={albums}
-        isDuplicateEntity={(albumA, albumB, useRules) =>
-          isDuplicateAlbum(albumA.name, albumB.name, useRules)
-        }
-        getEntityLink={getAlbumLink}
-        getEntityDisplayText={(album) => album.name}
-        getEntityJsonRepresentation={(album) => ({
-          artist: album.artist,
-          name: album.name,
-          url: getAlbumLink(album, user),
-        })}
-        getHeaders={() => [
-          "Album A Artist",
-          "Album A Name",
-          "Album A URL",
-          "Album B Artist",
-          "Album B Name",
-          "Album B URL",
+      <TabGroup
+        tabs={[
+          {
+            header: "Duplicates",
+            content: (
+              <PartitionedDuplicatesResultsContent
+                user={user}
+                entities={albums}
+                isDuplicateEntity={(albumA, albumB, useRules) =>
+                  isDuplicateAlbum(albumA.name, albumB.name, useRules)
+                }
+                getEntityLink={getAlbumLink}
+                getEntityDisplayText={(album) => album.name}
+                getEntityJsonRepresentation={(album) => ({
+                  artist: album.artist,
+                  name: album.name,
+                  url: getAlbumLink(album, user),
+                })}
+                getHeaders={() => [
+                  "Album A Artist",
+                  "Album A Name",
+                  "Album A URL",
+                  "Album B Artist",
+                  "Album B Name",
+                  "Album B URL",
+                ]}
+                sortEntities={(albumA, albumB) =>
+                  sortEntities(albumA.name, albumB.name)
+                }
+                getPartitionedEntities={getPartitionedEntities}
+              />
+            ),
+          },
+          {
+            header: "Search",
+            content: (
+              <SearchResultsContent
+                user={user}
+                entities={albums}
+                searchEntity={(album, searchTerm) =>
+                  album.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                  album.artist.toLowerCase().includes(searchTerm.toLowerCase())
+                }
+                getEntityDisplayText={({ artist, name }) =>
+                  `${artist} - ${name}`
+                }
+                getEntityLink={getAlbumLink}
+                getEntityJsonRepresentation={(album) => ({
+                  artist: album.artist,
+                  name: album.name,
+                  url: getAlbumLink(album, user),
+                })}
+              />
+            ),
+          },
         ]}
-        sortEntities={(albumA, albumB) =>
-          sortEntities(albumA.name, albumB.name)
-        }
-        getPartitionedEntities={getPartitionedEntities}
       />
     ),
   },
@@ -148,23 +179,50 @@ const entityMethods: {
     getNumEntities: getNumArtists,
     getEntities: getArtists,
     renderDuplicates: (artists, user) => (
-      <DuplicateResultsContent
-        user={user}
-        entities={artists.map(({ name }) => name)}
-        isDuplicateEntity={isDuplicateArtist}
-        getEntityLink={getArtistLink}
-        getEntityDisplayText={(artist) => artist}
-        getEntityJsonRepresentation={(artist) => ({
-          name: artist,
-          url: getArtistLink(artist, user),
-        })}
-        getHeaders={() => [
-          "Artist A",
-          "Artist A URL",
-          "Artist B",
-          "Artist B URL",
+      <TabGroup
+        tabs={[
+          {
+            header: "Duplicates",
+            content: (
+              <DuplicateResultsContent
+                user={user}
+                entities={artists.map(({ name }) => name)}
+                isDuplicateEntity={isDuplicateArtist}
+                getEntityLink={getArtistLink}
+                getEntityDisplayText={(artist) => artist}
+                getEntityJsonRepresentation={(artist) => ({
+                  name: artist,
+                  url: getArtistLink(artist, user),
+                })}
+                getHeaders={() => [
+                  "Artist A",
+                  "Artist A URL",
+                  "Artist B",
+                  "Artist B URL",
+                ]}
+                sortEntities={sortEntities}
+              />
+            ),
+          },
+          {
+            header: "Search",
+            content: (
+              <SearchResultsContent
+                user={user}
+                entities={artists.map(({ name }) => name)}
+                searchEntity={(artist, searchTerm) =>
+                  artist.toLowerCase().includes(searchTerm.toLowerCase())
+                }
+                getEntityDisplayText={(artist) => artist}
+                getEntityLink={getArtistLink}
+                getEntityJsonRepresentation={(artist) => ({
+                  name: artist,
+                  url: getArtistLink(artist, user),
+                })}
+              />
+            ),
+          },
         ]}
-        sortEntities={sortEntities}
       />
     ),
   },
