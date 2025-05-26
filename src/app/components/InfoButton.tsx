@@ -17,24 +17,43 @@ export const InfoButton = () => {
           <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-md w-full">
             <h2 className="text-xl font-bold mb-4">About</h2>
             <p className="text-sm mb-6">
-              This web app can help you find duplicate records in your Last.fm
-              library.
+              This web app helps you clean up your Last.fm library by scanning
+              for duplicate or keyword-matching tracks, albums, or artists.
               <br />
               <br />
-              Duplicate records often arise from variations in metadata between
-              different streaming services, or updates to the tags of already
-              existing songs, such as adding a feature tag.
+              Duplicate records often appear when streaming services update
+              track or album metadata, such as adding a feature or deluxe tag.
+              They can also arise from using multiple streaming platforms with
+              inconsistent metadata. <br />
+              <br />
+              Each duplicate found includes a direct link, allowing you to edit
+              the scrobbles on the Last.fm website. Note that scrobble editing
+              requires a Last.fm Pro subscription. You can also save your search
+              results for future access, independent of this site.
               <br />
               <br />
-              This tool will go through your Last.fm library, searching for
-              duplicate tracks, albums, or artists. Direct links are provided to
-              each duplicate that the algorithm finds, so you can edit the
-              scrobbles accordingly on the Last.fm website (of course, you need
-              to have Last.fm Pro to do so).
+              You can also search all fetched items for a specific keyword
+              you&apos;d like to clean up, such as removing
+              &apos;Remastered&apos; or &apos;Deluxe&apos; from your library.
               <br />
               <br />
-              You can also save the results of your search in either CSV or JSON
-              format.
+              Developed in 🇨🇦 by Alex Bisaillion.
+              <br />
+              <a
+                href="https://www.alexbisaillion.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                alexbisaillion.com
+              </a>
+              <br />
+              <a
+                href="https://github.com/alexbisaillion/scrobble-scrubber"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                github.com/alexbisaillion/scrobble-scrubber
+              </a>
             </p>
             <div className="flex justify-end">
               <Button
