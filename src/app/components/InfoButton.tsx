@@ -42,7 +42,7 @@ export const InfoButton = () => {
               <a
                 href="https://www.alexbisaillion.com/"
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noopener"
               >
                 alexbisaillion.com
               </a>
