@@ -20,6 +20,8 @@ import {
 } from "../logic";
 import { getAlbumLink, getArtistLink, getTrackLink } from "../utils";
 import { DuplicateResultsContent } from "./DuplicatesResultsContent";
+import { TabGroup } from "./common";
+import { SearchResultsContent } from "./SearchResultsContent";
 
 type EntityTypeMap = {
   tracks: Track;
@@ -50,31 +52,63 @@ const entityMethods: {
     getNumEntities: getNumTracks,
     getEntities: getTracks,
     renderDuplicates: (tracks, user) => (
-      <PartitionedDuplicatesResultsContent
-        user={user}
-        entities={tracks}
-        isDuplicateEntity={(trackA, trackB, useRules) =>
-          isDuplicateTrack(trackA.name, trackB.name, useRules)
-        }
-        getEntityLink={getTrackLink}
-        getEntityDisplayText={(track) => track.name}
-        getEntityJsonRepresentation={(track) => ({
-          artist: track.artist,
-          name: track.name,
-          url: getTrackLink(track, user),
-        })}
-        getHeaders={() => [
-          "Track A Artist",
-          "Track A Name",
-          "Track A URL",
-          "Track B Artist",
-          "Track B Name",
-          "Track B URL",
+      <TabGroup
+        tabs={[
+          {
+            header: "Duplicates",
+            content: (
+              <PartitionedDuplicatesResultsContent
+                key="duplicates"
+                user={user}
+                entities={tracks}
+                isDuplicateEntity={(trackA, trackB, useRules) =>
+                  isDuplicateTrack(trackA.name, trackB.name, useRules)
+                }
+                getEntityLink={getTrackLink}
+                getEntityDisplayText={(track) => track.name}
+                getEntityJsonRepresentation={(track) => ({
+                  artist: track.artist,
+                  name: track.name,
+                  url: getTrackLink(track, user),
+                })}
+                getHeaders={() => [
+                  "Track A Artist",
+                  "Track A Name",
+                  "Track A URL",
+                  "Track B Artist",
+                  "Track B Name",
+                  "Track B URL",
+                ]}
+                sortEntities={(trackA, trackB) =>
+                  sortEntities(trackA.name, trackB.name)
+                }
+                getPartitionedEntities={getPartitionedEntities}
+              />
+            ),
+          },
+          {
+            header: "Search",
+            content: (
+              <SearchResultsContent
+                user={user}
+                entities={tracks}
+                searchEntity={(track, searchTerm) =>
+                  track.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                  track.artist.toLowerCase().includes(searchTerm.toLowerCase())
+                }
+                getEntityDisplayText={({ artist, name }) =>
+                  `${artist} - ${name}`
+                }
+                getEntityLink={getTrackLink}
+                getEntityJsonRepresentation={(track) => ({
+                  artist: track.artist,
+                  name: track.name,
+                  url: getTrackLink(track, user),
+                })}
+              />
+            ),
+          },
         ]}
-        sortEntities={(trackA, trackB) =>
-          sortEntities(trackA.name, trackB.name)
-        }
-        getPartitionedEntities={getPartitionedEntities}
       />
     ),
   },

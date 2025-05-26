@@ -9,8 +9,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Split Scrobble Finder V2",
-  description: "A web app that finds split scrobbles in your Last.fm library.",
+  title: "Scrobble Scrubber",
+  description: "A web app with utilities to clean up your Last.fm library.",
 };
 
 export default function RootLayout({

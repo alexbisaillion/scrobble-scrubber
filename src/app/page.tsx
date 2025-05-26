@@ -32,9 +32,9 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center w-full">
-      <div className="flex flex-col p-4 items-center gap-4 max-w-5xl">
+      <div className="flex justify-between w-full p-4">
         <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
-          Split Scrobble Finder V2
+          Scrobble Scrubber
         </h2>
         <div className="flex items-center gap-4">
           <Button
@@ -50,6 +50,8 @@ export default function Home() {
           />
           <InfoButton />
         </div>
+      </div>
+      <div className="flex flex-col p-4 items-center gap-4 max-w-5xl min-w-5xl">
         {content}
       </div>
     </div>

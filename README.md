@@ -1,4 +1,4 @@
-# Split Scrobble Finder V2
+# Scrobble Scrubber
 
 ---
 
@@ -6,11 +6,13 @@
 
 ## Background
 
-This web app allows you to scan your Last.fm profile for split scrobbles, which can arise when streaming services change the metadata of a track, album or artist, such as adding a feature tag to the track title.
+This web app helps you clean up your Last.fm library by scanning for duplicate or keyword-matching tracks, albums, or artists.
 
-Switching between music streaming platforms can also create split entries in your Last.fm profile, given that metadata is generally not standardized among all platforms.
+Duplicate records often appear when streaming services update track or album metadata, such as adding a feature or deluxe tag. They can also arise from using multiple streaming platforms with inconsistent metadata.
 
-This is V2 of the app, as my [first version](https://github.com/alexbisaillion/split-scrobble-finder) fell into disrepair when Heroku removed its free tier.
+Each duplicate found includes a direct link, allowing you to edit the scrobbles on the Last.fm website. Note that scrobble editing requires a Last.fm Pro subscription. You can also save your search results for future access, independent of this site.
+
+You can also search all fetched items for a specific keyword you'd like to clean up, such as removing &apos;Remastered&apos; or &apos;Deluxe&apos; from your library.
 
 ## Usage
 
@@ -24,9 +26,7 @@ I recommend trying requests in both fashions. If you find that the rule set fail
 
 Note that request times can be significant, as it requires numerous strenuous calls to the Last.fm API.
 
-Once your results have been fetched, you can scroll through the detected split entries, where each entry provides a hyperlink to the specified track/album/artist in your library on the Last.fm site. You can then edit the scrobbles as desired on Last.fm.
-
-You can also download your results in either JSON or CSV format, so you don't have to keep waiting for your results to be generated if you want to view your results again.
+Once your results have been fetched, you can paginate through the detected split entries, where each entry provides a hyperlink to the specified track/album/artist in your library on the Last.fm site. You can then edit the scrobbles as desired on Last.fm. You can also download your results in either JSON or CSV format, so you don't have to keep waiting for your results to be generated if you want to view your results again. The search tab allows you to find specific keywords in the fetched results that you may want to clean up, such as finding all tracks that have "Remastered" in the title.
 
 ## Getting Started
 
@@ -36,6 +36,12 @@ Once you have an API key, create a `.env.local` file in the root directory and a
 
 ```
 LAST_FM_API_KEY=somealphanumericvalue
+```
+
+First, install all dependencies:
+
+```
+npm install
 ```
 
 Next, run the development server:
@@ -66,4 +72,4 @@ npm run test
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-The dependencies for this have been kept to a bare minimum, relying only on React and Next.js. Tailwind is used for the CSS. Keeping the app lightweight ensures it won't fall into disrepair again due to outdated dependencies.
+The dependencies for this have been kept to a bare minimum, relying only on React and Next.js. Tailwind is used for the CSS. Keeping the app lightweight ensures it won't fall into disrepair due to outdated and/or deprecated dependencies.
