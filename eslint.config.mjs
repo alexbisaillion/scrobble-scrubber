@@ -7,10 +7,14 @@ const __dirname = dirname(__filename);
 
 const compat = new FlatCompat({
   baseDirectory: __dirname,
+  recommendedConfig: true, // <-- this enables eslint:recommended internally
 });
 
-const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+export default [
+  ...compat.extends(
+    // Don't include eslint:recommended here! It's already included by recommendedConfig:true
+    "next/core-web-vitals",
+    "next/typescript",
+    "plugin:prettier/recommended",
+  ),
 ];
-
-export default eslintConfig;
