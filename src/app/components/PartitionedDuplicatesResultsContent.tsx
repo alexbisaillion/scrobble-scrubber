@@ -80,7 +80,7 @@ export const PartitionedDuplicatesResultsContent = <T,>({
   return (
     <div className="flex flex-col p-4 items-center gap-4">
       <SummaryCard
-        duplicates={[...duplicates.map(([, list]) => list)].flat()}
+        entities={duplicates.map(([, list]) => list.map(({ entityA, entityB }) => [entityA, entityB])).flat()}
         getEntityJsonRepresentation={getEntityJsonRepresentation}
         getHeaders={getHeaders}
       />

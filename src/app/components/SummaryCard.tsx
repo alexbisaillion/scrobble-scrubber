@@ -1,14 +1,13 @@
-import { DuplicateMatch } from "../types";
 import { Button } from "./common";
 
 type SummaryCardProps<T> = {
-  duplicates: DuplicateMatch<T>[];
+  entities: T[][];
   getEntityJsonRepresentation: (entity: T) => Record<string, string>;
   getHeaders: () => string[];
 };
 
 const downloadCSV = <T,>({
-  duplicates,
+  entities,
   getEntityJsonRepresentation,
   getHeaders,
 }: SummaryCardProps<T>) => {
@@ -25,11 +24,8 @@ const downloadCSV = <T,>({
 
   csvRows.push(getHeaders().map(escapeCSVValue).join(","));
 
-  for (const { entityA, entityB } of duplicates) {
-    const values = [
-      ...Object.values(getEntityJsonRepresentation(entityA)),
-      ...Object.values(getEntityJsonRepresentation(entityB)),
-    ].map(escapeCSVValue);
+  for (const entityList of entities) {
+    const values = entityList.map((entity) => Object.values(getEntityJsonRepresentation(entity))).flat().map(escapeCSVValue);
 
     csvRows.push(values.join(","));
   }
@@ -43,16 +39,13 @@ const downloadCSV = <T,>({
 };
 
 const downloadJSON = <T,>({
-  duplicates,
+  entities,
   getEntityJsonRepresentation,
 }: SummaryCardProps<T>) => {
   const blob = new Blob(
     [
       JSON.stringify(
-        duplicates.map(({ entityA, entityB }) => ({
-          entityA: getEntityJsonRepresentation(entityA),
-          entityB: getEntityJsonRepresentation(entityB),
-        })),
+        entities.map(entityList => entityList.map((entity) => getEntityJsonRepresentation(entity))),
         null,
         2
       ),
@@ -68,7 +61,7 @@ const downloadJSON = <T,>({
 };
 
 export const SummaryCard = <T,>(props: SummaryCardProps<T>) => {
-  const { duplicates } = props;
+  const { entities } = props;
   const handleDownloadCSV = () => {
     downloadCSV(props);
   };
@@ -81,7 +74,7 @@ export const SummaryCard = <T,>(props: SummaryCardProps<T>) => {
     <>
       <div className="text-gray-400">
         <p>
-          <strong>{duplicates.length}</strong> duplicates found.
+          <strong>{entities.length}</strong> results found.
         </p>
       </div>
       <div className="flex gap-4">
