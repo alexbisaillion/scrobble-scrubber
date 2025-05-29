@@ -47,7 +47,7 @@ const albumKeywords = [
 export function isDuplicateTrack(
   track1: string,
   track2: string,
-  useRules: boolean
+  useRules: boolean,
 ) {
   if (track1.toLocaleLowerCase() === track2.toLocaleLowerCase()) {
     // Skip exact matches -- some Last.fm libraries have exact matches.
@@ -75,7 +75,7 @@ export function isDuplicateTrack(
 export function isDuplicateAlbum(
   album1: string,
   album2: string,
-  useRules: boolean
+  useRules: boolean,
 ) {
   if (album1.toLocaleLowerCase() === album2.toLocaleLowerCase()) {
     // Skip exact matches -- some Last.fm libraries have exact matches.
@@ -107,7 +107,7 @@ export function isDuplicateAlbum(
 export function isDuplicateArtist(
   artist1: string,
   artist2: string,
-  useRules: boolean
+  useRules: boolean,
 ) {
   if (artist1.toLocaleLowerCase() === artist2.toLocaleLowerCase()) {
     // Skip exact matches -- some Last.fm libraries have exact matches.
@@ -316,7 +316,7 @@ function getFeaturedArtists(str: string) {
       if (str.includes(featKeyword)) {
         return str.substring(
           str.indexOf(featKeyword) + featKeyword.length,
-          str.length
+          str.length,
         );
       }
     }
@@ -355,13 +355,13 @@ function analyzeFeatureTagExcess(str1: string, str2: string) {
     if (str1.includes(featKeyword)) {
       cutoff1 = str1.substring(
         str1.indexOf(featKeyword) + featKeyword.length,
-        str1.length
+        str1.length,
       );
     }
     if (str2.includes(featKeyword)) {
       cutoff2 = str2.substring(
         str2.indexOf(featKeyword) + featKeyword.length,
-        str2.length
+        str2.length,
       );
     }
   }
@@ -396,7 +396,7 @@ function convertRomanNumToInt(romanNum: string) {
         (romanNumVals[cur] < romanNumVals[src[idx + 1]]
           ? -romanNumVals[cur]
           : romanNumVals[cur]),
-      0
+      0,
     );
 }
 

@@ -29,7 +29,7 @@ export const getPartitionedDuplicates = <T>({
   const allPartitions = [...duplicates.entries()];
 
   allPartitions.sort(
-    ([, matchesA], [, matchesB]) => matchesB.length - matchesA.length
+    ([, matchesA], [, matchesB]) => matchesB.length - matchesA.length,
   );
 
   return allPartitions;

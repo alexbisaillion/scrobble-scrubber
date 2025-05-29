@@ -4,7 +4,7 @@ import { ValidationError } from "./validators/types";
 export const fetchLastFmData = async <T>(
   params: RequestParams,
   apiKey: string,
-  typeGuard: (data: unknown) => data is T
+  typeGuard: (data: unknown) => data is T,
 ): Promise<ValidationError | T> => {
   const { url, headers } = getRequestOptions({ params, apiKey });
 

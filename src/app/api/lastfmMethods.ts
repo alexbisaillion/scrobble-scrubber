@@ -7,7 +7,7 @@ import { albums, artists, tracks } from "./test-data";
 import { ValidationError } from "./validators";
 
 export const getNumTracks = async (
-  user: string
+  user: string,
 ): Promise<ValidationError | number> => {
   if (process.env.USE_TEST_DATA) {
     return 1;
@@ -23,7 +23,7 @@ export const getNumTracks = async (
 };
 
 export const getNumAlbums = async (
-  user: string
+  user: string,
 ): Promise<ValidationError | number> => {
   if (process.env.USE_TEST_DATA) {
     return 1;
@@ -39,7 +39,7 @@ export const getNumAlbums = async (
 };
 
 export const getNumArtists = async (
-  user: string
+  user: string,
 ): Promise<ValidationError | number> => {
   if (process.env.USE_TEST_DATA) {
     return 1;
@@ -56,7 +56,7 @@ export const getNumArtists = async (
 
 export const getTracks = async (
   user: string,
-  page: number
+  page: number,
 ): Promise<ValidationError | Track[]> => {
   if (process.env.USE_TEST_DATA) {
     return tracks;
@@ -78,7 +78,7 @@ export const getTracks = async (
 
 export const getAlbums = async (
   user: string,
-  page: number
+  page: number,
 ): Promise<ValidationError | Album[]> => {
   if (process.env.USE_TEST_DATA) {
     return albums;
@@ -100,7 +100,7 @@ export const getAlbums = async (
 
 export const getArtists = async (
   user: string,
-  page: number
+  page: number,
 ): Promise<ValidationError | Artist[]> => {
   if (process.env.USE_TEST_DATA) {
     return artists;

@@ -48,6 +48,6 @@ export const isTopArtistsData = (data: unknown): data is TopArtistsData => {
       typeof artist === "object" &&
       artist !== null &&
       "name" in artist &&
-      typeof artist.name === "string"
+      typeof artist.name === "string",
   );
 };

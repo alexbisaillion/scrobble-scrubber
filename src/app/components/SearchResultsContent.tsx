@@ -19,7 +19,7 @@ export const SearchResultsContent = <T,>({
 }: SearchResultsContentProps<T>) => {
   const [searchTerm, setSearchTerm] = useState<string | undefined>(undefined);
   const [searchResults, setSearchResults] = useState<T[] | undefined>(
-    undefined
+    undefined,
   );
 
   const onApplySearch = () => {
@@ -28,7 +28,7 @@ export const SearchResultsContent = <T,>({
     }
 
     setSearchResults(
-      entities.filter((entity) => searchEntity(entity, searchTerm))
+      entities.filter((entity) => searchEntity(entity, searchTerm)),
     );
   };
 

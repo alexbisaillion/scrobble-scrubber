@@ -38,7 +38,7 @@ export const DuplicateResultsContent = <T,>({
     <>
       <Toggle isEnabled={useRules} onToggle={setUseRules} label="Use rules" />
       <SummaryCard
-        entities={duplicates.map(({ entityA, entityB }) => ([entityA, entityB]))}
+        entities={duplicates.map(({ entityA, entityB }) => [entityA, entityB])}
         getEntityJsonRepresentation={getEntityJsonRepresentation}
         getHeaders={getHeaders}
       />

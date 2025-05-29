@@ -25,7 +25,10 @@ const downloadCSV = <T,>({
   csvRows.push(getHeaders().map(escapeCSVValue).join(","));
 
   for (const entityList of entities) {
-    const values = entityList.map((entity) => Object.values(getEntityJsonRepresentation(entity))).flat().map(escapeCSVValue);
+    const values = entityList
+      .map((entity) => Object.values(getEntityJsonRepresentation(entity)))
+      .flat()
+      .map(escapeCSVValue);
 
     csvRows.push(values.join(","));
   }
@@ -45,14 +48,16 @@ const downloadJSON = <T,>({
   const blob = new Blob(
     [
       JSON.stringify(
-        entities.map(entityList => entityList.map((entity) => getEntityJsonRepresentation(entity))),
+        entities.map((entityList) =>
+          entityList.map((entity) => getEntityJsonRepresentation(entity)),
+        ),
         null,
-        2
+        2,
       ),
     ],
     {
       type: "application/json",
-    }
+    },
   );
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);

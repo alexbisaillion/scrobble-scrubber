@@ -1,5 +1,5 @@
 export const getPartitionedEntities = <T extends { artist: string }>(
-  entities: T[]
+  entities: T[],
 ) => {
   const resultsByArtists = new Map<string, T[]>();
   entities.forEach((entity) => {

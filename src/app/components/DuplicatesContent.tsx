@@ -40,11 +40,11 @@ const entityMethods: {
     getNumEntities: (user: string) => Promise<number | ValidationError>;
     getEntities: (
       user: string,
-      page: number
+      page: number,
     ) => Promise<EntityTypeMap[K][] | ValidationError>;
     renderDuplicates: (
       entities: EntityTypeMap[K][],
-      user: string
+      user: string,
     ) => JSX.Element;
   };
 } = {

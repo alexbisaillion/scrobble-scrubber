@@ -24,7 +24,7 @@ export const DuplicateTable = <T,>({
         {duplicates.map((duplicate, index) => {
           const { entityA, entityB } = duplicate;
           const key = `${getEntityDisplayText(entityA)}-${getEntityDisplayText(
-            entityB
+            entityB,
           )}`;
           return (
             <DuplicateRow

@@ -13,7 +13,7 @@ export const compareTwoStrings = (str1: string, str2: string): number => {
   const bigrams1 = bigram(str1);
   const bigrams2 = bigram(str2);
   const intersection = new Set(
-    [...bigrams1].filter((bigram) => bigrams2.has(bigram))
+    [...bigrams1].filter((bigram) => bigrams2.has(bigram)),
   );
 
   return (2 * intersection.size) / (bigrams1.size + bigrams2.size);

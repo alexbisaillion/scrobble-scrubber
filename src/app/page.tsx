@@ -44,7 +44,7 @@ export default function Home() {
               window.open(
                 "https://www.last.fm",
                 "_blank",
-                "noopener,noreferrer"
+                "noopener,noreferrer",
               )
             }
           />

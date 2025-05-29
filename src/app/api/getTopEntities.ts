@@ -12,9 +12,9 @@ export type GetTopEntitiesParams<T, U> = {
 };
 export const getTopEntities = async <
   T extends TopTracksData | TopAlbumsData | TopArtistsData,
-  U
+  U,
 >(
-  params: GetTopEntitiesParams<T, U>
+  params: GetTopEntitiesParams<T, U>,
 ): Promise<U | ValidationError> => {
   const { method, typeGuard, extractor, user, limit, page } = params;
   const envCheck = validateEnv();
@@ -34,7 +34,7 @@ export const getTopEntities = async <
   const data = await fetchLastFmData<T>(
     requestParams,
     LAST_FM_API_KEY,
-    typeGuard
+    typeGuard,
   );
   if (isValidationError(data)) {
     return data;

@@ -50,6 +50,6 @@ export const isTopAlbumsData = (data: unknown): data is TopAlbumsData => {
       "name" in album.artist &&
       typeof album.artist.name === "string" &&
       "name" in album &&
-      typeof album.name === "string"
+      typeof album.name === "string",
   );
 };

@@ -44,7 +44,7 @@ export const PartitionedDuplicatesResultsContent = <T,>({
       sortEntities,
       useRules,
       getPartitionedEntities,
-    ]
+    ],
   );
 
   const [tableIndex, setTableIndex] = useState(0);
@@ -55,7 +55,7 @@ export const PartitionedDuplicatesResultsContent = <T,>({
 
   const decrementTableIndex = () => {
     setTableIndex(
-      (prevIndex) => (prevIndex - 1 + duplicates.length) % duplicates.length
+      (prevIndex) => (prevIndex - 1 + duplicates.length) % duplicates.length,
     );
   };
 
@@ -80,7 +80,11 @@ export const PartitionedDuplicatesResultsContent = <T,>({
   return (
     <div className="flex flex-col p-4 items-center gap-4">
       <SummaryCard
-        entities={duplicates.map(([, list]) => list.map(({ entityA, entityB }) => [entityA, entityB])).flat()}
+        entities={duplicates
+          .map(([, list]) =>
+            list.map(({ entityA, entityB }) => [entityA, entityB]),
+          )
+          .flat()}
         getEntityJsonRepresentation={getEntityJsonRepresentation}
         getHeaders={getHeaders}
       />

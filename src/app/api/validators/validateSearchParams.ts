@@ -2,7 +2,7 @@ import { ValidationError } from "./types";
 
 export const validateSearchParams = <T extends Record<string, string | number>>(
   req: Request,
-  keys: (keyof T)[]
+  keys: (keyof T)[],
 ): T | ValidationError => {
   const { searchParams } = new URL(req.url);
   const result = {} as T;
