@@ -105,6 +105,7 @@ const entityMethods: {
                   name: track.name,
                   url: getTrackLink(track, user),
                 })}
+                getHeaders={() => ["Artist", "Track", "URL"]}
               />
             ),
           },
@@ -168,6 +169,7 @@ const entityMethods: {
                   name: album.name,
                   url: getAlbumLink(album, user),
                 })}
+                getHeaders={() => ["Artist", "Album", "URL"]}
               />
             ),
           },
@@ -219,6 +221,7 @@ const entityMethods: {
                   name: artist,
                   url: getArtistLink(artist, user),
                 })}
+                getHeaders={() => ["Artist", "URL"]}
               />
             ),
           },

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from "./common";
+import { SummaryCard } from "./SummaryCard";
 
 type SearchResultsContentProps<T> = {
   user: string;
@@ -8,6 +9,7 @@ type SearchResultsContentProps<T> = {
   getEntityDisplayText: (entity: T) => string;
   getEntityLink: (entity: T, user: string) => string;
   getEntityJsonRepresentation: (entity: T) => Record<string, string>;
+  getHeaders: () => string[];
 };
 
 export const SearchResultsContent = <T,>({
@@ -16,6 +18,8 @@ export const SearchResultsContent = <T,>({
   searchEntity,
   getEntityDisplayText,
   getEntityLink,
+  getEntityJsonRepresentation,
+  getHeaders,
 }: SearchResultsContentProps<T>) => {
   const [searchTerm, setSearchTerm] = useState<string | undefined>(undefined);
   const [searchResults, setSearchResults] = useState<T[] | undefined>(
@@ -42,27 +46,34 @@ export const SearchResultsContent = <T,>({
     }
 
     return (
-      <table className="w-full border-collapse border border-gray-600">
-        <tbody>
-          {searchResults.map((entity, index) => (
-            <tr
-              key={getEntityDisplayText(entity)}
-              className={index % 2 === 0 ? "bg-gray-800" : "bg-gray-700"}
-            >
-              <td className="px-4 py-2 border-t border-gray-600">
-                <a
-                  className="hover:opacity-75"
-                  href={getEntityLink(entity, user)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {getEntityDisplayText(entity)}
-                </a>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <>
+        <SummaryCard
+          entities={searchResults.map((result) => [result])}
+          getEntityJsonRepresentation={getEntityJsonRepresentation}
+          getHeaders={getHeaders}
+        />
+        <table className="w-full border-collapse border border-gray-600">
+          <tbody>
+            {searchResults.map((entity, index) => (
+              <tr
+                key={getEntityDisplayText(entity)}
+                className={index % 2 === 0 ? "bg-gray-800" : "bg-gray-700"}
+              >
+                <td className="px-4 py-2 border-t border-gray-600">
+                  <a
+                    className="hover:opacity-75"
+                    href={getEntityLink(entity, user)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {getEntityDisplayText(entity)}
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </>
     );
   };
 
