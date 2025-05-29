@@ -100,9 +100,13 @@ export const PartitionedDuplicatesResultsContent = <T,>({
         <Button
           onClick={decrementTableIndex}
           fill="bg-blue-600"
-          label="Previous"
+          label="Previous Artist"
         />
-        <Button onClick={incrementTableIndex} fill="bg-blue-600" label="Next" />
+        <Button
+          onClick={incrementTableIndex}
+          fill="bg-blue-600"
+          label="Next Artist"
+        />
       </div>
       {renderTable()}
     </div>
