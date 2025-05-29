@@ -35,7 +35,7 @@ export const DuplicateResultsContent = <T,>({
   });
 
   return (
-    <>
+    <div className="flex flex-col p-4 items-center gap-4">
       <Toggle isEnabled={useRules} onToggle={setUseRules} label="Use rules" />
       <SummaryCard
         entities={duplicates.map(({ entityA, entityB }) => [entityA, entityB])}
@@ -48,6 +48,6 @@ export const DuplicateResultsContent = <T,>({
         getEntityLink={getEntityLink}
         user={user}
       />
-    </>
+    </div>
   );
 };
