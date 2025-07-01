@@ -37,7 +37,7 @@ export const InfoButton = () => {
               &apos;Remastered&apos; or &apos;Deluxe&apos; from your library.
               <br />
               <br />
-              Developed in 🇨🇦 by Alex Bisaillion.
+              Developed by Alex Bisaillion.
               <br />
               <a
                 href="https://www.alexbisaillion.com/"
